@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>Mac上开发.Net遇到的坑 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+相信很多朋友都和我一样，使用Mac做为自己的电脑，但是工作中却需要使用.Net的开发环境，但是Mac对于.Net的支持却一直不是很好，时代在发展，微软都成为Github贡献最多的企业，那么Mac中顺利开发.Net的梦想能实现吗？  
+
+
+大家都懂的解决方案——虚拟机核心依然是在Windows上开发.Net程序，只需要安装虚拟机即可，推荐使用Parallels Desktop，价格不贵，淘宝有大量半价销售，可以使用融合模式。当然，可以找一些其他的免费得虚拟机，都差不多，都会有一个问题——卡。
+奇" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大家都懂的解决方案——虚拟机"><span class="toc-number">1.</span> <span class="toc-text">大家都懂的解决方案——虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#奇葩的方案——远程桌面"><span class="toc-number">2.</span> <span class="toc-text">奇葩的方案——远程桌面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#net-Core-让未来照进现实"><span class="toc-number">3.</span> <span class="toc-text">.net Core 让未来照进现实</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用不惯vs-code-xamarin-Studio你可以试试"><span class="toc-number">4.</span> <span class="toc-text">用不惯vs code,xamarin Studio你可以试试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Mac上开发.Net遇到的坑
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/macdotnet/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-05-26T22:00:00.000Z" itemprop="datePublished">2017-05-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/net/">.net</a>, <a class="article-tag-link" href="/tags/mac/">mac</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>相信很多朋友都和我一样，使用Mac做为自己的电脑，但是工作中却需要使用.Net的开发环境，但是Mac对于.Net的支持却一直不是很好，时代在发展，微软都成为Github贡献最多的企业，那么Mac中顺利开发.Net的梦想能实现吗？  </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="大家都懂的解决方案——虚拟机"><a href="#大家都懂的解决方案——虚拟机" class="headerlink" title="大家都懂的解决方案——虚拟机"></a>大家都懂的解决方案——虚拟机</h2><p>核心依然是在Windows上开发.Net程序，只需要安装虚拟机即可，推荐使用Parallels Desktop，价格不贵，淘宝有大量半价销售，可以使用融合模式。当然，可以找一些其他的免费得虚拟机，都差不多，都会有一个问题——卡。</p>
+<h2 id="奇葩的方案——远程桌面"><a href="#奇葩的方案——远程桌面" class="headerlink" title="奇葩的方案——远程桌面"></a>奇葩的方案——远程桌面</h2><p>其实这个方案并不奇葩，很多人的Mac唯一不能做的，就是.Net开发，或者说，就是.Net的编译和Visual Studio的使用，所以远程桌面配合Nginx或者其他方案，使用起来也是很不错。推荐使用Micorsoft remote desktop。至于调试JS你是喜欢在Mac环境还是Windows环境，都可以，你可以通过修改HOST或者用Nginx做反向代理，这里就不多说了。</p>
+<blockquote>
+<p>以上的两个方式都是在Windows作为开发的平台，不能算是在Mac上开发，Mac只是一个屏幕和一个键盘而已。下面介绍几个Mac环境中开发.Net的方式。  </p>
+</blockquote>
+<h2 id="net-Core-让未来照进现实"><a href="#net-Core-让未来照进现实" class="headerlink" title=".net Core 让未来照进现实"></a>.net Core 让未来照进现实</h2><p>其实大家都知道，.net Core是.net的未来，现在Core已经完全支持Mac平台，基本可以与Mac无缝结合，配合VS code使用，整个开发的体验其实是非常棒的。推荐仔阅读：<a href="http://www.cnblogs.com/dotNETCoreSG/p/aspnetcore-index.html" target="_blank" rel="noopener">http://www.cnblogs.com/dotNETCoreSG/p/aspnetcore-index.html</a> ，非常棒的文章。</p>
+<ul>
+<li>安装<br>参考：<a href="https://www.microsoft.com/net/core#macos" target="_blank" rel="noopener">https://www.microsoft.com/net/core#macos</a> ，如出现坑爹的疑问，试着重启下电脑。<br>安装Yeoman，会包括基础的代码，毕竟vs code是文本编辑器，不是IDE，达不到Visual Studio的水准，建项目和初始化项目的时候，不肯能全部敲代码，用这个就可以初始化项目。<br>参考：<a href="https://docs.asp.net/en/latest/client-side/yeoman.html" target="_blank" rel="noopener">Building Projects with Yeoman</a><br>Yeoman基于npm，对于长期使用Visual Studio开发的同学，可能不太了解Linux和  .Net Core的世界里，请务必知道npm的使用。</li>
+<li>使用  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dotnet restore</span><br><span class="line">dotnet run</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>然后通过浏览器就看到 .net 的网页，当然，如果你自己是使用控制台，也是可以的。<br>因为 .net core是有别于原有的 .net 2.0, .net 3.5 ,.net 4.0 … ,设计之初的目的就是为了跨平台，所以，可以理解为有别于以前版本的全新框架，所以，与原有的框架暂时无法顺利平移，即使强制转过来，也会有一些很奇葩的问题。  </p>
+<h2 id="用不惯vs-code-xamarin-Studio你可以试试"><a href="#用不惯vs-code-xamarin-Studio你可以试试" class="headerlink" title="用不惯vs code,xamarin Studio你可以试试"></a>用不惯vs code,xamarin Studio你可以试试</h2><p>.net core无法兼容前几代.net版本，那么前几代的怎么办呢，vs code 能用吗？<br>用Mono吧，.net Core的鼻祖，编辑器依然用vs code，但是抱歉，针对调试功能无法很好的支持。用过Visual Studio的人，你跟我说无法调试？呵呵，试试xamarin。<br>xamarin Studio是一个IDE，不仅可以开发 .net，还能开发Android和IOS程序，这个大家应该都知道，这里就不多说了。<br>Visual Studio能很好的支持断掉调试，支持MVC，虽然不如Visual Studio，但是基本的使用还是很方便的，智能提示也能及时的响应，相对也是一个不错的选择。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然上面介绍了多种我自己尝试的在Mac下开发.net程序的方案，但是每种方案都有不足之处，究其原因，还是因为 .net 在Linux平台属于一个相对小众的产品，但是随着Micosoft逐渐和Linux越走越近，.net core逐渐得到任何越来越多的认证，近乎完美的解决方案迟早会出现，但是现阶段，依然还需要忍耐。<br>以上方案在使用过程中，总会有各种的痛点，希望能尽快得到解决。例如：对MVC的版本支持有些差异、部分.dll不兼容、甚至还会出现大写小写不兼容的情况。PS:开发的习惯真的很重要，如下的两单代码就是有区别的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return View(&quot;~/Home&quot;);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return View(&quot;~/home&quot;);</span><br></pre></td></tr></table></figure>
+<p>在Windows下面，两种写法都是可以的，但是在Mac下，呵呵~~~。  </p>
+<hr>
+<p>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

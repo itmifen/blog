@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>React Native 常见问题 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+React Native开发逐渐更多的被应用到实际的开发过程中，以后会有越来越的应用使用React Native相关技术，关于使用过程中的问题，可以在http://reactnative.cn/ 以及搜索引擎找到，这里补充下自己开发过程中出现的几个问题，而不容易找到解决方案的。  
+
+
+无法找到react native module
+检查版本是否正确。当前版本是否与全局版本匹配，尽量与本机全部版本匹配。  
+npm使用2.0版本
+重启电脑试
+
+Android编译时，MainActivity.j" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#无法找到react-native-module"><span class="toc-number">1.</span> <span class="toc-text">无法找到react native module</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android编译时，MainActivity-java-37-错误-方法不会覆盖或实现超类型的方法-Override"><span class="toc-number">2.</span> <span class="toc-text">Android编译时，MainActivity.java:37: 错误: 方法不会覆盖或实现超类型的方法 @Override</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#android平台可以访问网络，IOS无法访问网络"><span class="toc-number">3.</span> <span class="toc-text">android平台可以访问网络，IOS无法访问网络</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            React Native 常见问题
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/reactnative/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-05-25T22:00:00.000Z" itemprop="datePublished">2017-05-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>React Native开发逐渐更多的被应用到实际的开发过程中，以后会有越来越的应用使用React Native相关技术，关于使用过程中的问题，可以在<a href="http://reactnative.cn/" target="_blank" rel="noopener">http://reactnative.cn/</a> 以及搜索引擎找到，这里补充下自己开发过程中出现的几个问题，而不容易找到解决方案的。  </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="无法找到react-native-module"><a href="#无法找到react-native-module" class="headerlink" title="无法找到react native module"></a>无法找到react native module</h2><ol>
+<li>检查版本是否正确。当前版本是否与全局版本匹配，尽量与本机全部版本匹配。  </li>
+<li>npm使用2.0版本</li>
+<li>重启电脑试</li>
+</ol>
+<h2 id="Android编译时，MainActivity-java-37-错误-方法不会覆盖或实现超类型的方法-Override"><a href="#Android编译时，MainActivity-java-37-错误-方法不会覆盖或实现超类型的方法-Override" class="headerlink" title="Android编译时，MainActivity.java:37: 错误: 方法不会覆盖或实现超类型的方法 @Override"></a>Android编译时，MainActivity.java:37: 错误: 方法不会覆盖或实现超类型的方法 @Override</h2><p>应该是最近有进行升级导致，0.29之前的版本文件是MainActivity.java，0.29之后是两个文件MainActivity.java 和MainApplication.java，自己用新版的init一个项目，然后替换文件就可以了。升级前建议看下说明，升级还是很多坑的。<br>记得替换文件后，文件中的项目名需要替换下。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function">Protected <span class="title">StringgetMainComponentName</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">'appname'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="android平台可以访问网络，IOS无法访问网络"><a href="#android平台可以访问网络，IOS无法访问网络" class="headerlink" title="android平台可以访问网络，IOS无法访问网络"></a>android平台可以访问网络，IOS无法访问网络</h2><p>原因是IOS最新版默认禁止访问非https的链接，修改info.list即可。(注意:后期IOS将强制使用https，此方法可能与2017年失效。)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>NSAppTransportSecurity<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">key</span>&gt;</span>NSAllowsArbitraryLoads<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -62,7 +62,7 @@
   top: 50%;
   left: 0;
   width: 100%;
-  color: #333;
+  color: #24292e;
   text-align: center;
   line-height: 30px;
   -webkit-transform: translateY(-50%);
@@ -117,7 +117,7 @@
   transition: color 0.3s ease;
 }
 .thread-item:hover {
-  color: #333;
+  color: #24292e;
 }
 @media screen and (max-height: 588px) {
   .author-meta {
@@ -155,6 +155,6 @@
     display: block;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(36, 41, 46, 0.1);
   }
 }

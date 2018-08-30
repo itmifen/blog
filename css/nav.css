@@ -85,14 +85,14 @@
   font-size: 0;
   border-width: 8px 12px;
   border-style: solid;
-  border-color: transparent #000 transparent transparent;
+  border-color: transparent #24292e transparent transparent;
 }
 .nav-item-tag .widget-wrap {
   height: 300px;
   line-height: 22px;
   color: #fff;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(36, 41, 46, 0.95);
   box-sizing: border-box;
 }
 .nav-item-tag .tag-list {
@@ -145,7 +145,7 @@
     height: 44px;
     font-size: 13px;
     line-height: 44px;
-    background-color: #000;
+    background-color: #24292e;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -176,7 +176,7 @@
   }
   .nav-item-tag .widget-wrap {
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(36, 41, 46, 0.9);
   }
   .open-panel {
     display: inline-block;
