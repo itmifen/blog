@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>SQL Server 性能查看 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="执行最慢的SQL语句1234567891011121314151617181920212223242526SELECT(total_elapsed_time / execution_count)/1000 N&#39;平均时间ms&#39;,total_elapsed_time/1000 N&#39;总花费时间ms&#39;,total_worker_time/1000 N&#39;所用的CPU总时间ms&#39;,total_physical_reads N&#39;物理读取总次数&#39;,total_logical_reads/execution_co" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#执行最慢的SQL语句"><span class="toc-number">1.</span> <span class="toc-text">执行最慢的SQL语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总耗CPU最多的前个SQL"><span class="toc-number">2.</span> <span class="toc-text">总耗CPU最多的前个SQL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#平均耗CPU最多的前个SQL"><span class="toc-number">3.</span> <span class="toc-text">平均耗CPU最多的前个SQL</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            SQL Server 性能查看
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/sqlper/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-12-31T22:00:00.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/数据库/">数据库</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h4 id="执行最慢的SQL语句"><a href="#执行最慢的SQL语句" class="headerlink" title="执行最慢的SQL语句"></a>执行最慢的SQL语句</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">(total_elapsed_time / execution_count)/<span class="number">1000</span> N<span class="string">'平均时间ms'</span></span><br><span class="line">,total_elapsed_time/<span class="number">1000</span> N<span class="string">'总花费时间ms'</span></span><br><span class="line">,total_worker_time/<span class="number">1000</span> N<span class="string">'所用的CPU总时间ms'</span></span><br><span class="line">,total_physical_reads N<span class="string">'物理读取总次数'</span></span><br><span class="line">,total_logical_reads/execution_count N<span class="string">'每次逻辑读次数'</span></span><br><span class="line">,total_logical_reads N<span class="string">'逻辑读取总次数'</span></span><br><span class="line">,total_logical_writes N<span class="string">'逻辑写入总次数'</span></span><br><span class="line">,execution_count N<span class="string">'执行次数'</span></span><br><span class="line">,<span class="keyword">SUBSTRING</span>(st.text, (qs.statement_start_offset/<span class="number">2</span>) + <span class="number">1</span>,</span><br><span class="line">((<span class="keyword">CASE</span> statement_end_offset</span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">-1</span> <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(st.text)</span><br><span class="line"><span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span></span><br><span class="line">- qs.statement_start_offset)/<span class="number">2</span>) + <span class="number">1</span>) N<span class="string">'执行语句'</span></span><br><span class="line">,creation_time N<span class="string">'语句编译时间'</span></span><br><span class="line">,last_execution_time N<span class="string">'上次执行时间'</span></span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">sys.dm_exec_query_stats <span class="keyword">AS</span> qs <span class="keyword">CROSS</span> <span class="keyword">APPLY</span> sys.dm_exec_sql_text(qs.sql_handle) st</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line"><span class="keyword">SUBSTRING</span>(st.text, (qs.statement_start_offset/<span class="number">2</span>) + <span class="number">1</span>,</span><br><span class="line">((<span class="keyword">CASE</span> statement_end_offset</span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">-1</span> <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(st.text)</span><br><span class="line"><span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span></span><br><span class="line">- qs.statement_start_offset)/<span class="number">2</span>) + <span class="number">1</span>) <span class="keyword">not</span> <span class="keyword">like</span> <span class="string">'�tch%'</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line">total_elapsed_time / execution_count <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+<h4 id="总耗CPU最多的前个SQL"><a href="#总耗CPU最多的前个SQL" class="headerlink" title="总耗CPU最多的前个SQL"></a>总耗CPU最多的前个SQL</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">20</span></span><br><span class="line">    total_worker_time/<span class="number">1000</span> <span class="keyword">AS</span> [总消耗CPU 时间(ms)],execution_count [运行次数],</span><br><span class="line">    qs.total_worker_time/qs.execution_count/<span class="number">1000</span> <span class="keyword">AS</span> [平均消耗CPU 时间(ms)],</span><br><span class="line">    last_execution_time <span class="keyword">AS</span> [最后一次执行时间],max_worker_time /<span class="number">1000</span> <span class="keyword">AS</span> [最大执行时间(ms)],</span><br><span class="line">    <span class="keyword">SUBSTRING</span>(qt.text,qs.statement_start_offset/<span class="number">2</span>+<span class="number">1</span>, </span><br><span class="line">        (<span class="keyword">CASE</span> <span class="keyword">WHEN</span> qs.statement_end_offset = <span class="number">-1</span> </span><br><span class="line">        <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(qt.text) </span><br><span class="line">        <span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span> -qs.statement_start_offset)/<span class="number">2</span> + <span class="number">1</span>) </span><br><span class="line">    <span class="keyword">AS</span> [使用CPU的语法], qt.text [完整语法],</span><br><span class="line">    qt.dbid, dbname=db_name(qt.dbid),</span><br><span class="line">    qt.objectid,object_name(qt.objectid,qt.dbid) ObjectName</span><br><span class="line"><span class="keyword">FROM</span> sys.dm_exec_query_stats qs <span class="keyword">WITH</span>(nolock)</span><br><span class="line"><span class="keyword">CROSS</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(qs.sql_handle) <span class="keyword">AS</span> qt</span><br><span class="line"><span class="keyword">WHERE</span> execution_count&gt;<span class="number">1</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span>  total_worker_time <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+<h4 id="平均耗CPU最多的前个SQL"><a href="#平均耗CPU最多的前个SQL" class="headerlink" title="平均耗CPU最多的前个SQL"></a>平均耗CPU最多的前个SQL</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">20</span></span><br><span class="line">    total_worker_time/<span class="number">1000</span> <span class="keyword">AS</span> [总消耗CPU 时间(ms)],execution_count [运行次数],</span><br><span class="line">    qs.total_worker_time/qs.execution_count/<span class="number">1000</span> <span class="keyword">AS</span> [平均消耗CPU 时间(ms)],</span><br><span class="line">    last_execution_time <span class="keyword">AS</span> [最后一次执行时间],min_worker_time /<span class="number">1000</span> <span class="keyword">AS</span> [最小执行时间(ms)],</span><br><span class="line">    max_worker_time /<span class="number">1000</span> <span class="keyword">AS</span> [最大执行时间(ms)],</span><br><span class="line">    <span class="keyword">SUBSTRING</span>(qt.text,qs.statement_start_offset/<span class="number">2</span>+<span class="number">1</span>, </span><br><span class="line">        (<span class="keyword">CASE</span> <span class="keyword">WHEN</span> qs.statement_end_offset = <span class="number">-1</span> </span><br><span class="line">        <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(qt.text) </span><br><span class="line">        <span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span> -qs.statement_start_offset)/<span class="number">2</span> + <span class="number">1</span>) </span><br><span class="line">    <span class="keyword">AS</span> [使用CPU的语法], qt.text [完整语法],</span><br><span class="line">    qt.dbid, dbname=db_name(qt.dbid),</span><br><span class="line">    qt.objectid,object_name(qt.objectid,qt.dbid) ObjectName</span><br><span class="line"><span class="keyword">FROM</span> sys.dm_exec_query_stats qs <span class="keyword">WITH</span>(nolock)</span><br><span class="line"><span class="keyword">CROSS</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(qs.sql_handle) <span class="keyword">AS</span> qt</span><br><span class="line"><span class="keyword">WHERE</span>  execution_count&gt;<span class="number">1</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> (qs.total_worker_time/qs.execution_count/<span class="number">1000</span>) <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
