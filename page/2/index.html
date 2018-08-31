@@ -124,56 +124,6 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/database2/">数据库的使用你可能忽略了这些 (续)</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/database2/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-06-01T22:00:00.000Z" itemprop="datePublished">2018-06-02</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前写过一篇文章《数据库的使用你可能忽略了这些》，主要是从一些大家使用使用时容易忽略的地方，如：字段长度、表设计等来说明，这篇文章同样也是这样的主题，只是从另外的几个方面来说说数据库使用中，容易忽略，导致入坑的地方。  </p>
-<h2 id="合理预估数据量"><a href="#合理预估数据量" class="headerlink" title="合理预估数据量"></a>合理预估数据量</h2><p>在数据库进行表设计的时候，就应该评估可能产生的数据量，数据量会对整个开发和代码的健壮性有很大的影响。开发一个数据量万级别、十万级别、百万级别、千万以上级别数量的应用，在开发思路、技术选型、架构都能都要很大的差别。<br>基本上的我的原则是：  </p>
-<ul>
-<li>万级别的数据库，可以随意一点，SQL编写有好的习惯；</li>
-<li>十万级别，注意索引，注意联表性能；</li>
-<li>百万级别，尽量减少联表，尽量不要做汇总查询，如查总数 ； </li>
-<li>千万以上级别，除缓存之外，使用分表分库 ； </li>
-</ul>
-<p>很多系统因为在设计表的时候，没有很好的预估的后期系统的发展，导致上线不久就出现无法支撑的情况，代码上太多的联表查询，不在乎基础的SQL性能，导致数据库的瓶颈很快就显现出来，不得不重构系统。设计数据库的时候，一定是基于业务进行设计的，对业务的发展有一定的预估，看得长远一点。</p>
-        
-        <p class="article-more-link">
-            <a href="/database2/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
             <a href="/autotest/">你应该学会的Postman用法(2)-自动化测试</a>
         </h1>
         
@@ -487,6 +437,50 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/coder/">程序员也是弱势群体？——从WePhone开发者事件说起</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/coder/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2017-12-31T22:00:00.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/其他/">其他</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>作为一名不爱凑热闹的人，今天一直在持续关注一个热点事件——WePhone开发者自杀，即使前几天热议的孕妇跳楼新闻我都不太关注，但是这个事件却让我深深的震撼，花了几个小时在微博上搜索了相关的信息，去了解事情的始末，也去看了网络上对此事件的一些评判，太多的杂音让个人的产生一些想法和大家一起探讨。  </p>
+</blockquote>
+        
+        <p class="article-more-link">
+            <a href="/coder/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/sqlper/">SQL Server 性能查看</a>
         </h1>
         
@@ -523,21 +517,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/coder/">程序员也是弱势群体？——从WePhone开发者事件说起</a>
+            <a href="/tomcatidea/">Tomcat多站点部署及集成到IntelliJ IDEA</a>
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="/coder/">
+            <a class="article-date" href="/tomcatidea/">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2017-12-31T22:00:00.000Z" itemprop="datePublished">2018-01-01</time>
+    <time datetime="2017-09-30T22:00:00.000Z" itemprop="datePublished">2017-10-01</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/其他/">其他</a>
+    <a class="article-tag-link" href="/tags/java/">java</a>
 </div>
 
 
@@ -547,11 +541,15 @@
     <section class="article-body markdown-body">
         
         <blockquote>
-<p>作为一名不爱凑热闹的人，今天一直在持续关注一个热点事件——WePhone开发者自杀，即使前几天热议的孕妇跳楼新闻我都不太关注，但是这个事件却让我深深的震撼，花了几个小时在微博上搜索了相关的信息，去了解事情的始末，也去看了网络上对此事件的一些评判，太多的杂音让个人的产生一些想法和大家一起探讨。  </p>
+<p>Tomcat是Java最常用的Web容器，作为服务端部署的一款轻量级工具，使用非常广泛，这里了简单记录下Tomcat的基础是的使用。<br>Tomcat的安装和使用就不赘述了，网上很多教程，主要介绍下： </p>
 </blockquote>
+<ol>
+<li>如何通过Tomcat进行多站点的部署 </li>
+<li>如何在IntelliJ IDEA中集成Tomcat </li>
+</ol>
         
         <p class="article-more-link">
-            <a href="/coder/#more">
+            <a href="/tomcatidea/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
