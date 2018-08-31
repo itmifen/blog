@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>你必须了解的反射——反射来实现实体验证 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+开发工作中，都会需要针对传入的参数进行验证，特别是针对实体进行验证，确保传入的参数格式正确。这里做了一个非常简单的组件进行验证。抛砖引玉，让大家深入思考下反射的应用。    
+
+需求日常开发，都是通过API进行前后端的系统对接，对API参数的验证是一个使用率非常高的功能，如果能非常简便的的进行参数验证，能降低代码量，提升工作效率。 
+使用项目地址：https://github.com/itmifen/mfutility  
+
+以前使用最原始的验证方式：
+12345678910111213141" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路扩展"><span class="toc-number">3.</span> <span class="toc-text">思路扩展</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            你必须了解的反射——反射来实现实体验证
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/studyreflect/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>开发工作中，都会需要针对传入的参数进行验证，特别是针对实体进行验证，确保传入的参数格式正确。这里做了一个非常简单的组件进行验证。抛砖引玉，让大家深入思考下反射的应用。    </p>
+</blockquote>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>日常开发，都是通过API进行前后端的系统对接，对API参数的验证是一个使用率非常高的功能，如果能非常简便的的进行参数验证，能降低代码量，提升工作效率。 </p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>项目地址：<a href="https://github.com/itmifen/mfutility" target="_blank" rel="noopener">https://github.com/itmifen/mfutility</a>  </p>
+<a id="more"></a>
+<p>以前使用最原始的验证方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">if</span>(testEntity.getImages().length()&gt;<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="comment">//这里是业务逻辑</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(testEntity.getTitle().length()&gt;<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="comment">//这里是业务逻辑</span></span><br><span class="line">        &#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">这样导致实现起来重复的代码太多，而且开发起来太耗时。这里使用注解的方式进行优化，只需要在实体定义的时候，定义验证的内容，使用的时候用只需要调用验证的方法就可以了。  </span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 定义测试的实体</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestEntity</span></span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 图片</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Valid</span>(description = <span class="string">"图片"</span>,minLength = <span class="number">1</span>,maxLength = <span class="number">200</span>,regex=<span class="string">".*runoob.*"</span>)</span><br><span class="line">        <span class="keyword">private</span> String images;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 标题</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Valid</span>(description = <span class="string">"标题"</span>,isEmpty = <span class="keyword">false</span>,maxLength = <span class="number">20</span>)</span><br><span class="line">        <span class="keyword">private</span> String title;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getImages</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> images;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImages</span><span class="params">(String images)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.images = images;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getTitle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> title;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTitle</span><span class="params">(String title)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.title = title;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>description</td>
+<td>字段中文名</td>
+</tr>
+<tr>
+<td>isEmpty</td>
+<td>是否可为空</td>
+</tr>
+<tr>
+<td>maxLength</td>
+<td>最大长度</td>
+</tr>
+<tr>
+<td>minLength</td>
+<td>最小长度</td>
+</tr>
+<tr>
+<td>regex</td>
+<td>正则表达式  </td>
+</tr>
+</tbody>
+</table>
+<p>验证的时候只需要调用实体就可以进行验证  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line">ValidResultEntity validResultEntity = EntityCheckUtil.validate(testEntity);</span><br><span class="line">System.out.println(validResultEntity.getMessage());</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">返回的ValidResultEntity会告诉你是否成功，如果错误，会告诉你错误的原因。  </span><br><span class="line"></span><br><span class="line">## 源码说明  </span><br><span class="line">其实，整体的实现思路非常简单，主要是使用java的自定义注解来进行验证。  </span><br><span class="line">新定义一个注解(Valid.java)：  </span><br><span class="line">``` java</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Valid &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 字段描述</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否可以为空</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true可以为空，false不能为空</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最大长度</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxLength</span><span class="params">()</span> <span class="keyword">default</span> 1000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最小长度</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minLength</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 正则表达式</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  String <span class="title">regex</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">建一个通用的方法来进行验证：  </span><br><span class="line">``` java</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注解验证电泳方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bean 验证的实体</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ValidResultEntity <span class="title">validate</span><span class="params">(Object bean)</span> </span>&#123;</span><br><span class="line">        ValidResultEntity result = <span class="keyword">new</span> ValidResultEntity();</span><br><span class="line">        result.setSucceed(<span class="keyword">true</span>);</span><br><span class="line">        result.setMessage(<span class="string">"验证通过"</span>);</span><br><span class="line"></span><br><span class="line">        Class&lt;?&gt; cls = bean.getClass();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检测field是否存在</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 获取实体字段集合</span></span><br><span class="line">            Field[] fields = cls.getDeclaredFields();</span><br><span class="line">            <span class="keyword">for</span> (Field f : fields) &#123;</span><br><span class="line">                <span class="comment">// 通过反射获取该属性对应的值</span></span><br><span class="line">                f.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                <span class="comment">// 获取字段值</span></span><br><span class="line">                Object value = f.get(bean);</span><br><span class="line">                <span class="comment">// 获取字段上的注解集合</span></span><br><span class="line">                Annotation[] arrayAno = f.getAnnotations();</span><br><span class="line">                <span class="keyword">for</span> (Annotation annotation : arrayAno) &#123;</span><br><span class="line">                    <span class="comment">// 获取注解类型（注解类的Class）</span></span><br><span class="line">                    Class&lt;?&gt; clazz = annotation.annotationType();</span><br><span class="line">                    <span class="comment">// 获取注解类中的方法集合</span></span><br><span class="line">                    Method[] methodArray = clazz.getDeclaredMethods();</span><br><span class="line">                    <span class="keyword">for</span> (Method method : methodArray) &#123;</span><br><span class="line">                        <span class="comment">// 获取方法名</span></span><br><span class="line">                        String methodName = method.getName();</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">if</span>(<span class="string">"description"</span>.equals(methodName)) &#123;</span><br><span class="line">                            <span class="keyword">continue</span>;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 初始化注解验证的方法处理类 （我的处理方法写在本类中）</span></span><br><span class="line">                        Object obj = EntityCheckUtil.class.newInstance();</span><br><span class="line">                        <span class="comment">// 获取方法</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="comment">// 根据方法名获取该方法</span></span><br><span class="line">                            Method m = obj.getClass().getDeclaredMethod(methodName, Object.class, Field.class);</span><br><span class="line">                            <span class="comment">// 调用该方法</span></span><br><span class="line">                            result = (ValidResultEntity) m.invoke(obj, value, f);</span><br><span class="line">                            <span class="comment">/* 验证结果 有一处失败则退出 */</span></span><br><span class="line">                            <span class="keyword">if</span>(result.isSucceed()==<span class="keyword">false</span>) &#123;</span><br><span class="line">                                <span class="keyword">return</span> result;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">validate 主要是通过反射获取类的值、注解，根据获取的数据进行调用：</span><br><span class="line"></span><br><span class="line">``` java </span><br><span class="line"><span class="comment">// 根据方法名获取该方法</span></span><br><span class="line">Method m = obj.getClass().getDeclaredMethod(methodName, Object.class, Field.class);</span><br><span class="line"><span class="comment">// 调用该方法</span></span><br><span class="line">result = (ValidResultEntity) m.invoke(obj, value, f);</span><br><span class="line"><span class="comment">/* 验证结果 有一处失败则退出 */</span></span><br><span class="line"><span class="keyword">if</span>(result.isSucceed()==<span class="keyword">false</span>) &#123;</span><br><span class="line">   <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>invoke 中对获取的方法进行具体调用实现，这里我定义了最简单的几个方法，包括：</p>
+<ul>
+<li>isEmpty</li>
+<li>maxLength</li>
+<li>minLength</li>
+<li>regex  </li>
+</ul>
+<p>其实，自己也可以扩展更多的方法，只要能了解这个思路，完全可以自己定制更多的规则。  </p>
+<h2 id="思路扩展"><a href="#思路扩展" class="headerlink" title="思路扩展"></a>思路扩展</h2><p>不管是java 还是 .net，都是支持反射的，反射的应用其实很广的，可以很容易的针对代码进行抽象处理，在具体的开发过成功，其实是可以很好的进行扩展的。  其实，关于实体验证的框架也是有很多成熟的产品(如：<a href="http://hibernate.org/validator/)，但是大多数都是考虑很广，实现比较复杂点，如果自己只想做一个很轻量级的，完全可以自己来实现。" target="_blank" rel="noopener">http://hibernate.org/validator/)，但是大多数都是考虑很广，实现比较复杂点，如果自己只想做一个很轻量级的，完全可以自己来实现。</a><br>以上的代码非常简单，但是却能节省很大工作量的，再次抛砖引玉，大家也可以思考下很多类似的实现，如： </p>
+<ul>
+<li>基于缓存注解</li>
+</ul>
+<pre><code class="java"><span class="meta">@redis</span>(key=<span class="string">'test'</span>,expire=<span class="number">1800</span>)
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">testOldRedis</span><span class="params">()</span></span>{
+        <span class="keyword">if</span>(testEntity.getImages().length()&gt;<span class="number">2</span>){
+            <span class="comment">//这里是业务逻辑</span>
+        }
+        <span class="keyword">if</span>(testEntity.getTitle().length()&gt;<span class="number">2</span>){
+            <span class="comment">//这里是业务逻辑</span>
+        }
+    }
+</code></pre>
+<ul>
+<li>基于MQ注解</li>
+</ul>
+<p>当然，这些都是需要自己开发的，其实开发的负责难度不高，但是却能让代码的结构更加清晰简洁，反射绝对不是黑科技，而是提高效率的核武器。</p>
+<p>（完）</p>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

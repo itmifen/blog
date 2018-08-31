@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>IntelliJ IDEA插件——冷门神器分享 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+IntelliJ  IDEA就不必介绍了，至今还能保持IDE前三的神器，如今java程序员的首选，今天介绍几款冷门但绝对是神器的IDEA插件。 
+
+前言IDEA自不必说，IDEA插件是开发中必备的神器，相信大家对常见的插件都如数家珍，如：findbug、checkstyle、JRebel、key promoter以及刚出的新贵阿里代码规范，这些都给开发人员带来极大的效率提升，今天我给大家介绍的几个，可能在很多插件推荐的文章里都没有提到，但是绝对是值得尝试的几款插件。  
+
+grep conso" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep-console"><span class="toc-number">2.</span> <span class="toc-text">grep console</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-Log-Plugin"><span class="toc-number">3.</span> <span class="toc-text">MyBatis Log Plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#restfultookit"><span class="toc-number">4.</span> <span class="toc-text">restfultookit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">5.</span> <span class="toc-text">最后</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            IntelliJ IDEA插件——冷门神器分享
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/ideaplugin/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-02T22:00:00.000Z" itemprop="datePublished">2018-06-03</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>IntelliJ  IDEA就不必介绍了，至今还能保持IDE前三的神器，如今java程序员的首选，今天介绍几款冷门但绝对是神器的IDEA插件。 </p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>IDEA自不必说，IDEA插件是开发中必备的神器，相信大家对常见的插件都如数家珍，如：findbug、checkstyle、JRebel、key promoter以及刚出的新贵阿里代码规范，这些都给开发人员带来极大的效率提升，今天我给大家介绍的几个，可能在很多插件推荐的文章里都没有提到，但是绝对是值得尝试的几款插件。  </p>
+<a id="more"></a>
+<h2 id="grep-console"><a href="#grep-console" class="headerlink" title="grep console"></a>grep console</h2><p>java 开发的过程中，日志都会输出到console，输出的内容是非常多的，所以需要有一个工具可以方便的查找日志，或者可以非常明显显示我们关注的内容，grep console就是这样的一个工具。<br>安装完成后，在console中右键就能打开。  </p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fpyo71lwe5j317i0fwdpg.jpg" alt=""><br>并且可以设置不同的日志级别的显示样式。  </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fpyo9z2un2j31kw0ob44d.jpg" alt=""><br>我就把ERROR设置为红色，比较容易看到。</p>
+<p>当然，也可以直接根据关键字搜索你想要的。<br><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fpyobalrcfj31kw06bgmj.jpg" alt=""><br>最赞的是，搜索条件是支持正则表达式的。基本能满足所有的需求了。</p>
+<h2 id="MyBatis-Log-Plugin"><a href="#MyBatis-Log-Plugin" class="headerlink" title="MyBatis Log Plugin"></a>MyBatis Log Plugin</h2><p>Mybatis现在是java中操作数据库的首选，在开发的时候，我们都会把Mybatis的脚本直接输出在console中，但是默认的情况下，输出的脚本不是一个可以直接执行的。<br><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fpyoemw0gpj31bg032q3w.jpg" alt="">  </p>
+<p>如果我们想直接执行，还需要在手动转化一下。<br>MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的，如图：<br><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fpyoh8gx0vj31ce09egni.jpg" alt=""><br>怎么样，是不是看起来很直观。执行程序后，我们可以很清晰的看到我们执行了哪些sql脚本，而且脚本可以执行拿出来运行。</p>
+<h2 id="restfultookit"><a href="#restfultookit" class="headerlink" title="restfultookit"></a>restfultookit</h2><p>Spring MVC网页开发的时候，我们都是通过requestmapping的方式来定义页面的URL地址的，为了找到这个地址我们一般都是cmd+shift+F的方式进行查找，大家都知道，我们URL的命名一个是类requestmapping+方法requestmapping，查找的时候还是有那么一点不方便的，restfultookit就能很方便的帮忙进行查找。<br>例如：我要找到/book/add 对应的controller,那么只要cmd+斜杠 ,如图：<br><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fpyonyvp73j30vg04ydgs.jpg" alt=""><br>就能直接定位到我们想要的controller。这个也是真心方便，当然restfultookit还为我们提供的其他的功能。<br><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fpyopp1hc3j313g0xetd7.jpg" alt=""><br>居然能后根据我们的controller帮我们生成默认的测试数据，还能直接调用测试，这个可以是解决了我们每次postman调试数据时，自己傻傻的组装数据的的操作，这个更加清晰，比在console找数据包要方便多了。  </p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果大家还有什么好用的IDEA插件，欢迎大家推荐，程序员就是一批爱折腾的人，永远在提升效率的路上摸索着。  </p>
+<hr>
+<p>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

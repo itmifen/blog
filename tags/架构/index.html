@@ -51,7 +51,7 @@
         <span class="vm">标签</span>
     </h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
     </div>
   </div>
 
@@ -128,6 +128,336 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/mquse/">MQ(消息队列)常见的应用场景解析</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/mquse/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-07-26T22:00:00.000Z" itemprop="datePublished">2018-07-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提高系统性能首先考虑的是数据库的优化，之前一篇文章《数据库的使用你可能忽略了这些》中有提到过开发中，针对数据库需要注意的事项。但是数据库因为历史原因，横向扩展是一件非常复杂的工程，所有我们一般会尽量把流量都挡在数据库之前。<br>不管是无限的横向扩展服务器，还是纵向阻隔到达数据库的流量，都是这个思路。阻隔直达数据库的流量，缓存组件和消息组件是两大杀器。之前文章《Redis常见的应用场景解析》已经描述了最常用的缓存组件redis的应用场景，那么今天，就重点说说MQ的应用场景。</p>
+<h2 id="MQ简介"><a href="#MQ简介" class="headerlink" title="MQ简介"></a>MQ简介</h2><p>MQ,Message queue,消息队列，就是指保存消息的一个容器。具体的定义这里就不类似于数据库、缓存等，用来保存数据的。当然，与数据库、缓存等产品比较，也有自己一些特点，具体的特点后文会做详细的介绍。<br>现在常用的MQ组件有activeMQ、rabbitMQ、rocketMQ、zeroMQ,当然近年来火热的kafka,从某些场景来说，也是MQ，当然kafka的功能更加强大，虽然不同的MQ都有自己的特点和优势，但是，不管是哪种MQ，都有MQ本身自带的一些特点，下面，咱们就先聊聊MQ的特点。  </p>
+        
+        <p class="article-more-link">
+            <a href="/mquse/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/redisuse/">Redis常见的应用场景解析</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/redisuse/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>Redis是一个key-value存储系统，现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用，这里介绍下Redis经常遇到的使用场景。  </p>
+</blockquote>
+<h2 id="Redis特性"><a href="#Redis特性" class="headerlink" title="Redis特性"></a>Redis特性</h2><p>一个产品的使用场景肯定是需要根据产品的特性，先列举一下Redis的特点：</p>
+<ul>
+<li>读写性能优异</li>
+<li>持久化</li>
+<li>数据类型丰富</li>
+<li>单线程</li>
+<li>数据自动过期</li>
+<li>发布订阅</li>
+<li>分布式</li>
+</ul>
+<p>这里我们通过几个场景，不同维度说下Redis的应用。</p>
+        
+        <p class="article-more-link">
+            <a href="/redisuse/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/studyreflect/">你必须了解的反射——反射来实现实体验证</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/studyreflect/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>开发工作中，都会需要针对传入的参数进行验证，特别是针对实体进行验证，确保传入的参数格式正确。这里做了一个非常简单的组件进行验证。抛砖引玉，让大家深入思考下反射的应用。    </p>
+</blockquote>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>日常开发，都是通过API进行前后端的系统对接，对API参数的验证是一个使用率非常高的功能，如果能非常简便的的进行参数验证，能降低代码量，提升工作效率。 </p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>项目地址：<a href="https://github.com/itmifen/mfutility" target="_blank" rel="noopener">https://github.com/itmifen/mfutility</a>  </p>
+        
+        <p class="article-more-link">
+            <a href="/studyreflect/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/database2/">数据库的使用你可能忽略了这些 (续)</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/database2/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-01T22:00:00.000Z" itemprop="datePublished">2018-06-02</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前写过一篇文章《数据库的使用你可能忽略了这些》，主要是从一些大家使用使用时容易忽略的地方，如：字段长度、表设计等来说明，这篇文章同样也是这样的主题，只是从另外的几个方面来说说数据库使用中，容易忽略，导致入坑的地方。  </p>
+<h2 id="合理预估数据量"><a href="#合理预估数据量" class="headerlink" title="合理预估数据量"></a>合理预估数据量</h2><p>在数据库进行表设计的时候，就应该评估可能产生的数据量，数据量会对整个开发和代码的健壮性有很大的影响。开发一个数据量万级别、十万级别、百万级别、千万以上级别数量的应用，在开发思路、技术选型、架构都能都要很大的差别。<br>基本上的我的原则是：  </p>
+<ul>
+<li>万级别的数据库，可以随意一点，SQL编写有好的习惯；</li>
+<li>十万级别，注意索引，注意联表性能；</li>
+<li>百万级别，尽量减少联表，尽量不要做汇总查询，如查总数 ； </li>
+<li>千万以上级别，除缓存之外，使用分表分库 ； </li>
+</ul>
+<p>很多系统因为在设计表的时候，没有很好的预估的后期系统的发展，导致上线不久就出现无法支撑的情况，代码上太多的联表查询，不在乎基础的SQL性能，导致数据库的瓶颈很快就显现出来，不得不重构系统。设计数据库的时候，一定是基于业务进行设计的，对业务的发展有一定的预估，看得长远一点。</p>
+        
+        <p class="article-more-link">
+            <a href="/database2/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/codemanage/">加强管理能提高代码质量吗？</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/codemanage/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>, <a class="article-tag-link" href="/tags/项目管理/">项目管理</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>代码质量是咱们程序开发中永远的一个痛，提升代码质量有很多种方式，强化管理是一种很常见的方式，这里咱们就聊聊，所谓的管理，真的是提升代码质量最有效的方式吗？  </p>
+<h2 id="外包团队进行代码实现，可以吗？"><a href="#外包团队进行代码实现，可以吗？" class="headerlink" title="外包团队进行代码实现，可以吗？"></a>外包团队进行代码实现，可以吗？</h2><p>很多企业喜欢将系统的代码实现细节交由外包团队处理，声称只要产品设计的合理，只要架构合理，只要代码规范合理，代码的实现找谁实现都是一样的，所以干脆找外包团队来实现，这应该是很多非互联网公司，特别是传统企业的思路。但是，结果真的是这样吗？<br>经历过的人应该都是有很深的感触的，外包团队开发的代码和公司内部人员开发的代码，质量上是有很大的扯别的，且不论这是因为技术本身的差别，因人而异，因环境而异，因心态而异产生的代码就有很大的不同。<br>软件是一个工程化的产品，那么工程化产品的特点是什么？</p>
+<ul>
+<li>长期运营维护</li>
+<li>频繁的变更</li>
+<li>高频沟通</li>
+</ul>
+<p>你让一个没有融入感的人去做这些事情，会有一个好的结果吗？都说做菜要用心去做，其实编程也是需要用心去完成的工作，一个小的疏忽都可能会造成严重的后果，公司内部人都无法100%保证，外包团队能保证吗？<br><strong>最后说明下，外包不会节省成本，从短期来看，人员成本不会少，可能只是降低了一定的人员异动风险，长期来看，是一项非常不划算的投入。</strong> </p>
+        
+        <p class="article-more-link">
+            <a href="/codemanage/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/autotest/">你应该学会的Postman用法(2)-自动化测试</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/autotest/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前的一篇文章《你应该学会的Postman用法》,主要介绍了postman的一些高级的用法，便于日常开发和调试使用，本文的基础是对postman的基本使用以及一些高级用法有一定的了解，如对此不太了解的同学，建议移步：<a href="https://www.jianshu.com/p/eb8746f05617" target="_blank" rel="noopener">《你应该学会的Postman用法》</a>了解。  </p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着公司微服务体系服务越来越多，业务增长越来越迅速，版本迭代越来越快，而且对系统的可用性要求越来越高，传统的手工发布系统的方式已经完全无法满足日常运维的需求了，自动化构建发布的需求越来越强烈，但是自动化发布有个基础的环境，自动化测试，鉴于团队规模不大，测试人员的能力参差不齐，自动化测试我们选择了以开发测试一起搭建的方式，通过轻量级的工具postman进行自动化测试。  </p>
+        
+        <p class="article-more-link">
+            <a href="/autotest/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/database1/">数据库的使用你可能忽略了这些</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/database1/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>数据库的管理是一个非常专业的事情，对数据库的调优、监控一般是由数据库工程师完成，但是开发人员也经常与数据库打交道，即使是简单的增删改查也是有很多窍门，这里，一起来聊聊数据库中很容易忽略的问题。 </p>
+</blockquote>
+        
+        <p class="article-more-link">
+            <a href="/database1/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/mycat/">学会数据库读写分离、分表分库——用Mycat，这一篇就够了！</a>
         </h1>
         
@@ -157,6 +487,51 @@
         
         <p class="article-more-link">
             <a href="/mycat/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/postmanuse/">你应该学会的接口调试神器——Postman高级用法！</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/postmanuse/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-26T22:00:00.000Z" itemprop="datePublished">2018-05-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>postman这个神器相信大家都用过，程序员作为非专业的测试人员，非常需要这么一款简单轻量级的restful测试工具，但是不知道你是否知道，postman的强大之处不只是测试一下接口，还有其他非常赞的使用方式。</p>
+</blockquote>
+<h2 id="批量执行接口"><a href="#批量执行接口" class="headerlink" title="批量执行接口"></a>批量执行接口</h2><p>入门级功能，但是被很多人忽略。postman左侧有个collections的tab,可以将接口进行分组，而且可以将分组以后的接口进行批量的执行，是一个非常赞的功能。当然，点击Runner也是可以的。</p>
+        
+        <p class="article-more-link">
+            <a href="/postmanuse/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>

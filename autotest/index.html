@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>你应该学会的Postman用法(2)-自动化测试 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="前言之前的一篇文章《你应该学会的Postman用法》,主要介绍了postman的一些高级的用法，便于日常开发和调试使用，本文的基础是对postman的基本使用以及一些高级用法有一定的了解，如对此不太了解的同学，建议移步：《你应该学会的Postman用法》了解。  
+背景随着公司微服务体系服务越来越多，业务增长越来越迅速，版本迭代越来越快，而且对系统的可用性要求越来越高，传统的手工发布系统的方式已经完全无法满足日常运维的需求了，自动化构建发布的需求越来越强烈，但是自动化发布有个基础的环境，自动化测" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试文件共享"><span class="toc-number">3.</span> <span class="toc-text">测试文件共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本测试"><span class="toc-number">4.</span> <span class="toc-text">脚本测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初步使用"><span class="toc-number">4.2.</span> <span class="toc-text">初步使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数详解"><span class="toc-number">4.3.</span> <span class="toc-text">参数详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            你应该学会的Postman用法(2)-自动化测试
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/autotest/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前的一篇文章《你应该学会的Postman用法》,主要介绍了postman的一些高级的用法，便于日常开发和调试使用，本文的基础是对postman的基本使用以及一些高级用法有一定的了解，如对此不太了解的同学，建议移步：<a href="https://www.jianshu.com/p/eb8746f05617" target="_blank" rel="noopener">《你应该学会的Postman用法》</a>了解。  </p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着公司微服务体系服务越来越多，业务增长越来越迅速，版本迭代越来越快，而且对系统的可用性要求越来越高，传统的手工发布系统的方式已经完全无法满足日常运维的需求了，自动化构建发布的需求越来越强烈，但是自动化发布有个基础的环境，自动化测试，鉴于团队规模不大，测试人员的能力参差不齐，自动化测试我们选择了以开发测试一起搭建的方式，通过轻量级的工具postman进行自动化测试。  </p>
+<a id="more"></a>
+<h2 id="测试文件共享"><a href="#测试文件共享" class="headerlink" title="测试文件共享"></a>测试文件共享</h2><p>postman可以将测试的接口进行collections分组，分组后的一组接口可以进行导出，如图：<br><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fs9z1d4vyvj31020ee3yx.jpg" alt=""><br>导出后的文件，可以作为测试脚本共享，使用的人员只要导入，即可使用。<br><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fs9z3vs1z5j312804w746.jpg" alt=""><br>这样，就可以在不同人员间，共享一个测试的文件。当然，如果能升级到高级版，可以直接通过不同的账号在云端共享测试文件，更加方便。  </p>
+<h2 id="脚本测试"><a href="#脚本测试" class="headerlink" title="脚本测试"></a>脚本测试</h2><p>一直以来，我们都是介绍通过postman 的UI进行测试的，但是，实际做自动化测试的时候，我们更多是使用脚本，特别是在生产环境，通过脚本进行测试，就是必然了。postman为我提供了一个测试的工具——newman，基于node.js的一个脚本测试工具。  </p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>先安装node.js,这里不赘述了，开发人员必备工具。<br>在安装newman:  </p>
+<pre><code class="shell">npm install -g newman
+</code></pre>
+<h3 id="初步使用"><a href="#初步使用" class="headerlink" title="初步使用"></a>初步使用</h3><p>记得前面介绍的，我们导出的测试文件吧，那个文件除了分享给别人，也是我们用来测试的文件。 </p>
+<pre><code class="shell">newman run 11.json
+</code></pre>
+<p>11.json 就是我刚才导出的文件，使用脚本文件类型必须是json。<br>这时候看看我们测试发生了什么？  </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fs9zf7ftb3j31ce0nw75a.jpg" alt=""><br>貌似，失败了。提示我们循环，执行了一次，6个请求，但是全面部失败了。看到错误的信息发现URI不正确，因为我用到postman了环境变量，但是导出的结果里没有环境变量。这时候我们需要调整一下执行的脚本。  </p>
+<pre><code class="shell">newman run 11.json -e url.json
+</code></pre>
+<p>url.json 实际是我们需要当前执行的环境变量，文件从就是如图方式导出的：<br><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fs9zizzv0oj30y80a2aa6.jpg" alt=""><br><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fs9zjtc1ioj312k03uq2r.jpg" alt=""><br>导出后，我们也是将文件命名为json类型的文件。这样我看下我们执行的结果。<br><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fs9zky96s0j312e0iat8w.jpg" alt=""><br>全部执行成功了。就是这么简单。一个命令配上我们开发时候就需要用到的测试文件，就可以了，无需另外的测试脚本，用一个shell脚本即可完成结果的测试。  </p>
+<h3 id="参数详解"><a href="#参数详解" class="headerlink" title="参数详解"></a>参数详解</h3><p>newman是个非常轻量级的命令，参数很少，这里我们列出常用的几个参数：  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-e</td>
+<td>环境变量(environment)文件路径或者url，json文件</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>全部配置(Global)文件路径或url，json文件</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>测试数据文件路径，cvs文件</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>循环测试次数  </td>
+</tr>
+<tr>
+<td>–delay-request</td>
+<td>延迟执行时间</td>
+</tr>
+<tr>
+<td>–timeout-request</td>
+<td>请求超时时间  </td>
+</tr>
+<tr>
+<td>–bail</td>
+<td>其中一个接口失败后，是否继续执行  </td>
+</tr>
+</tbody>
+</table>
+<p>详细参数，可以参考：<a href="https://www.getpostman.com/docs/v6/postman/collection_runs/command_line_integration_with_newman" target="_blank" rel="noopener">【这里】</a>  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这样一个非常轻量级的自动化测试脚本就做好了，当然，这是我们做自动化构建发布一个前提，postman的优势是将日常开发中需要用的测试工具做成通过shell就能执行的工具，比专门花时间了编写soapui这样的脚本来说，更加轻量级，更加友好，当集成了shell的相关功能后，对于开发人员来说，可扩展性就变得非常容易了，后面的文章我将会介绍如何结合postman，再整合其他构建发布工具，来对我们的微服务进行发布，真正做到了自动化的发布、测试，而且能做到不停机、不影响用户使用情况下完成系统的发布。</p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

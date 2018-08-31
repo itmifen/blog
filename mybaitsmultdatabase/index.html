@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>spring mybaits多数据源动态切换 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="场景说明日常开发中，连接多个数据库是一个很常见的需求，我们的系统是基于spring boot+mybatis进行数据库的操作，网上常见的思路是基于不同的数据库创建不同的bean,大概的实现方式如下：  
+
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950package com.joylee.fd.crontab.config;import org.apache.i" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#场景说明"><span class="toc-number">1.</span> <span class="toc-text">场景说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于Mybatis实现思路"><span class="toc-number">2.</span> <span class="toc-text">基于Mybatis实现思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于spring-mybatis-实现思路"><span class="toc-number">3.</span> <span class="toc-text">基于spring mybatis 实现思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            spring mybaits多数据源动态切换
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/mybaitsmultdatabase/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-07-26T22:00:00.000Z" itemprop="datePublished">2018-07-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/数据库/">数据库</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="场景说明"><a href="#场景说明" class="headerlink" title="场景说明"></a>场景说明</h2><p>日常开发中，连接多个数据库是一个很常见的需求，我们的系统是基于spring boot+mybatis进行数据库的操作，网上常见的思路是基于不同的数据库创建不同的bean,大概的实现方式如下：  </p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.joylee.fd.crontab.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.SqlSessionFactoryBean;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.SqlSessionTemplate;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Primary;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.PathMatchingResourcePatternResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.datasource.DataSourceTransactionManager;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@MapperScan</span>(basePackages = <span class="string">"com.joylee.fd.crontab.mapper.distribution"</span>, sqlSessionTemplateRef  = <span class="string">"distributionSqlSessionTemplate"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DistributionDBConfiguration</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Bean</span>(name = <span class="string">"distributionDataSource"</span>)</span><br><span class="line">        <span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"spring.datasource"</span>)</span><br><span class="line">        <span class="meta">@Primary</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> DataSource <span class="title">distributionDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> DataSourceBuilder.create().build();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Bean</span>(name = <span class="string">"distributionSqlSessionFactory"</span>)</span><br><span class="line">        <span class="meta">@Primary</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">distributionSqlSessionFactory</span><span class="params">(@Qualifier(<span class="string">"distributionDataSource"</span>)</span> DataSource dataSource) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            SqlSessionFactoryBean bean = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">            bean.setDataSource(dataSource);</span><br><span class="line">            bean.setMapperLocations(<span class="keyword">new</span> PathMatchingResourcePatternResolver().getResources(<span class="string">"classpath*:com/joylee/distribution/mapper/*.xml"</span>));</span><br><span class="line">            <span class="keyword">return</span> bean.getObject();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Bean</span>(name = <span class="string">"distributionDataSourceTransactionManager"</span>)</span><br><span class="line">        <span class="meta">@Primary</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">distributionTransactionManager</span><span class="params">(@Qualifier(<span class="string">"distributionDataSource"</span>)</span> DataSource dataSource) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Bean</span>(name = <span class="string">"distributionSqlSessionTemplate"</span>)</span><br><span class="line">        <span class="meta">@Primary</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> SqlSessionTemplate <span class="title">distributionSqlSessionTemplate</span><span class="params">(@Qualifier(<span class="string">"distributionSqlSessionFactory"</span>)</span> SqlSessionFactory sqlSessionFactory) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似方式，创建多个Configuration以及多个Bean,因为设为@Configuration，所以在启动的时候Bean都会创建，然后使用的时候只需要将不同的数据库mapper放在设置好的classpath（<em>第35行代码</em>）,默认走@Primary中的数据库连接，如果需要走其他的，只要在数据库DAO中加上@@qualifier(“bean名”)即可。   </p>
+<p>此方案网上很多实现，这里就是细说了。有兴趣大家可以去搜索一下<em>spring boot mybatis多数据库</em> 解决方案。</p>
+<p>此方案适用于数据库数量固定这样的需求，如果数据库是动态实时修改的，那么该怎么处理呢，或者数据库数量很多而且一直在扩充（如分库场景），这样处理显然不行，那么我们应该怎么处理呢?这里先说说解决思路。  </p>
+<h2 id="基于Mybatis实现思路"><a href="#基于Mybatis实现思路" class="headerlink" title="基于Mybatis实现思路"></a>基于Mybatis实现思路</h2><p>为了了解mybatis，这里先简单介绍下mybatis的几个和数据库连接相关的核心类。  </p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SqlSessionFactory</td>
+<td>SqlSession的工厂，负责创建SqlSession</td>
+</tr>
+<tr>
+<td>SqlSession</td>
+<td>mybatis的核心api,负责和数据库交互的回话，该类的方法负责执行数据库的操作</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>mybaits的配置类</td>
+</tr>
+<tr>
+<td>Environment</td>
+<td>数据库环境类，主要是配置事务和数据库连接</td>
+</tr>
+<tr>
+<td>MappedStatement</td>
+<td>这两个类负责管理具体需要执行的内和方法</td>
+</tr>
+<tr>
+<td>*Handler</td>
+<td>主要是基于执行的方法输入和输出参数类型转换处理</td>
+</tr>
+</tbody>
+</table>
+<p>mybatis的实现代码结构还是比较容易理解的，我们这里重点管理数据库连接的切换，所有我们重点关注的主要是：SqlSessionFactory、SqlSession、Configuration、Environment，当然还有一个datasouce类，这个类是JDBC的类，用来管理数据库连接。  </p>
+<p>我最开始的思路就是就是绕过SqlSessionFactory Bean创建，因为Bean的生命周期是在程序启动的时候执行的，看起来是无法改变的。所以我考虑了如下的方式：  </p>
+<p>针对每一个数据库连接，在使用的时候去创建一个新的SqlSessionFactory，通过mybatis的api new SqlSessionFactory().build()来创建多个SqlSessionFactory，然后根据SqlSessionFactory来创建SqlSession，后面思考了一下，这是一个非常严重的错误，SqlSessionFactory本来就是用来进行SqlSession管理的，显然创建多个SqlSessionFactory是非常不合适的，SqlSessionFactory最好是单例，SqlSessionFactory可以根据不同的数据库创建不同的SqlSession。  </p>
+<p>基于java mybatis实现，大概的步骤就是：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码来自mybaits官网</span></span><br><span class="line">DataSource dataSource = BaseDataTest.createBlogDataSource();</span><br><span class="line">TransactionFactory transactionFactory = <span class="keyword">new</span> JdbcTransactionFactory();</span><br><span class="line"></span><br><span class="line">Environment environment = <span class="keyword">new</span> Environment(<span class="string">"development"</span>, transactionFactory, dataSource);</span><br><span class="line"></span><br><span class="line">Configuration configuration = <span class="keyword">new</span> Configuration(environment);</span><br><span class="line">configuration.setLazyLoadingEnabled(<span class="keyword">true</span>);</span><br><span class="line">configuration.setEnhancementEnabled(<span class="keyword">true</span>);</span><br><span class="line">configuration.getTypeAliasRegistry().registerAlias(Blog.class);</span><br><span class="line">configuration.getTypeAliasRegistry().registerAlias(Post.class);</span><br><span class="line">configuration.getTypeAliasRegistry().registerAlias(Author.class);</span><br><span class="line">configuration.addMapper(BoundBlogMapper.class);</span><br><span class="line">configuration.addMapper(BoundAuthorMapper.class);</span><br><span class="line"></span><br><span class="line">SqlSessionFactoryBuilder builder = <span class="keyword">new</span> SqlSessionFactoryBuilder();</span><br><span class="line">SqlSessionFactory factory = builder.build(configuration);</span><br></pre></td></tr></table></figure>
+<h2 id="基于spring-mybatis-实现思路"><a href="#基于spring-mybatis-实现思路" class="headerlink" title="基于spring mybatis 实现思路"></a>基于spring mybatis 实现思路</h2><p>现在的java项目几乎都是基于spring进行开发，对于这样的需求，肯定是可以以spring的方式进行解决的，我陷入了一个误区，一直收到bean在创建后很难修改这个思路的影响，放弃spring bean管理的方式，但是其实这也是一个错误的方向。</p>
+<p>spring bean的确是程序启动的时候就完成了bean的创建，但是每个bean本身是有提供很多方法和属性的，其实bean的很多属性是可以修改的，SqlSessionFactorybean肯定会有这样的属性，果然，我们只要获取到程序启动时创建的bean，然后修改属性的值就可以了。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> corpDatabaseBO 数据库实体</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> SqlSessionFactory</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> PropertyVetoException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  SqlSessionFactory <span class="title">changeSqlSessionFactory</span><span class="params">(CorpDatabaseBO corpDatabaseBO)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//获取当前SqlSessionFactory bean</span></span><br><span class="line">        </span><br><span class="line">        SqlSessionFactory bean = SpringUtils.getBean(SqlSessionFactory.class);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(bean==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"default SqlSessionFactory bean is not created"</span>);</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        logger.info(String.format(<span class="string">"当前的sqlsessionfactory为:%s"</span>,bean.getConfiguration().getEnvironment().getDataSource().getConnection().getCatalog()));</span><br><span class="line">        </span><br><span class="line">		<span class="comment">//因为业务需要，我用的是sqlserver</span></span><br><span class="line">        SQLServerDataSource sqlServerDataSource = <span class="keyword">new</span> SQLServerDataSource();</span><br><span class="line">        sqlServerDataSource.setServerName(corpDatabaseBO.getUrl());</span><br><span class="line">        sqlServerDataSource.setDatabaseName(corpDatabaseBO.getDatabasename());</span><br><span class="line">        sqlServerDataSource.setUser(corpDatabaseBO.getUsername());</span><br><span class="line">        sqlServerDataSource.setPassword(corpDatabaseBO.getPassword());</span><br><span class="line">        sqlServerDataSource.setPortNumber(corpDatabaseBO.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//数据库连接池用的是Hikari</span></span><br><span class="line">        HikariDataSource hikariDataSource = <span class="keyword">new</span> HikariDataSource();</span><br><span class="line">        hikariDataSource.setDataSource(sqlServerDataSource);</span><br><span class="line"></span><br><span class="line">        TransactionFactory transactionFactory =  <span class="keyword">new</span> JdbcTransactionFactory();</span><br><span class="line">        Environment environment = <span class="keyword">new</span> Environment(corpDatabaseBO.getDatabasename(), transactionFactory, hikariDataSource);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        修改environment,这样就可以修改数据库地址了。</span></span><br><span class="line">        bean.getConfiguration().setEnvironment(environment);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在第30行：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bean.getConfiguration().setEnvironment(environment);</span><br></pre></td></tr></table></figure>
+<p>通过bean获取configuration，然后再设置Environment 即可修改数据库连接。每次需要执行数据库切换的时候，只要重新调用changeSqlSessionFactory方法即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>开发中遇到问题，在自己没有很好的解决思路的情况下，可以去网上查找相关的资料，但是有时候，因为自己业务的特殊性，其实网上是没有很好的解决方案的，甚至网上的一些解决方案并非一个很好的解决方案，我们参考别人方案的时候，一定要弄清楚代码每一层的意思，是否是自己真正需要的，而不是简单的copy。</li>
+<li>当网上也没有解决方案的时候，建议多花点时间去阅读源码，因为这个功能，虽然不至于阅读了mybatis所有的源码，但是对mybatis整体的结构有了一个清晰的认识，大部分源码也有阅读，这算是此次最大的收获。</li>
+</ul>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

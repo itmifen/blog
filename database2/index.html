@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>数据库的使用你可能忽略了这些 (续) | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="前言之前写过一篇文章《数据库的使用你可能忽略了这些》，主要是从一些大家使用使用时容易忽略的地方，如：字段长度、表设计等来说明，这篇文章同样也是这样的主题，只是从另外的几个方面来说说数据库使用中，容易忽略，导致入坑的地方。  
+合理预估数据量在数据库进行表设计的时候，就应该评估可能产生的数据量，数据量会对整个开发和代码的健壮性有很大的影响。开发一个数据量万级别、十万级别、百万级别、千万以上级别数量的应用，在开发思路、技术选型、架构都能都要很大的差别。基本上的我的原则是：  
+
+万级别的数据库，可以" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合理预估数据量"><span class="toc-number">2.</span> <span class="toc-text">合理预估数据量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合理预估并发访问量"><span class="toc-number">3.</span> <span class="toc-text">合理预估并发访问量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#循环进行数据库的操作"><span class="toc-number">3.1.</span> <span class="toc-text">循环进行数据库的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#业务本身的高频次数据请求"><span class="toc-number">3.2.</span> <span class="toc-text">业务本身的高频次数据请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库线程池的合理使用"><span class="toc-number">4.</span> <span class="toc-text">数据库线程池的合理使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            数据库的使用你可能忽略了这些 (续)
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/database2/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-01T22:00:00.000Z" itemprop="datePublished">2018-06-02</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前写过一篇文章《数据库的使用你可能忽略了这些》，主要是从一些大家使用使用时容易忽略的地方，如：字段长度、表设计等来说明，这篇文章同样也是这样的主题，只是从另外的几个方面来说说数据库使用中，容易忽略，导致入坑的地方。  </p>
+<h2 id="合理预估数据量"><a href="#合理预估数据量" class="headerlink" title="合理预估数据量"></a>合理预估数据量</h2><p>在数据库进行表设计的时候，就应该评估可能产生的数据量，数据量会对整个开发和代码的健壮性有很大的影响。开发一个数据量万级别、十万级别、百万级别、千万以上级别数量的应用，在开发思路、技术选型、架构都能都要很大的差别。<br>基本上的我的原则是：  </p>
+<ul>
+<li>万级别的数据库，可以随意一点，SQL编写有好的习惯；</li>
+<li>十万级别，注意索引，注意联表性能；</li>
+<li>百万级别，尽量减少联表，尽量不要做汇总查询，如查总数 ； </li>
+<li>千万以上级别，除缓存之外，使用分表分库 ； </li>
+</ul>
+<p>很多系统因为在设计表的时候，没有很好的预估的后期系统的发展，导致上线不久就出现无法支撑的情况，代码上太多的联表查询，不在乎基础的SQL性能，导致数据库的瓶颈很快就显现出来，不得不重构系统。设计数据库的时候，一定是基于业务进行设计的，对业务的发展有一定的预估，看得长远一点。</p>
+<a id="more"></a>
+<h2 id="合理预估并发访问量"><a href="#合理预估并发访问量" class="headerlink" title="合理预估并发访问量"></a>合理预估并发访问量</h2><p>数据库有天然的瓶颈，就是并发量。我们一般会通过缓存来减少数据库的并发连接，以及对数据库的操作，数据库的并发，不是只有大型平台才会遇到，很多中小平台其实也会面临这样的问题，例如：  </p>
+<h3 id="循环进行数据库的操作"><a href="#循环进行数据库的操作" class="headerlink" title="循环进行数据库的操作"></a>循环进行数据库的操作</h3><p>这个问题，上一篇文章我也提到过，不要在循环里进行数据库的操作，这个会直接导致数据库连接数暴增，影响非常严重。虽然是个比较低级的问题，但是出现的概率其实是非常高的，在我身边看到很多很多这种案例了，这种问题，就是需要程序员自己本身避免这些问题，当然，也可以通过一些手段去监控，找到这些问题，只是会比较麻烦一点。  </p>
+<h3 id="业务本身的高频次数据请求"><a href="#业务本身的高频次数据请求" class="headerlink" title="业务本身的高频次数据请求"></a>业务本身的高频次数据请求</h3><p>其实有些业务，即使是中小型的平台，也会有高并发请求数据库的情况，常见的例子如：日志。例如，我们需要抓取到所有人的操作日志，或者所有模块的加载时间，并且持久化保存。如果，当初选型通过Mysql去记录这些数据，那么就很容易遇到高并发的问题。这种就是属于选型的错误了。  </p>
+<p>数据库对高并发的处理一直是短板，所以应该尽量避免高并发的数据库操作，查询通过缓存处理，增删改这可以通过MQ或者Kafka这样的工具异步进行处理，如果对数据库的结构化要求不高，则可以用hbase或者hive进行数据库的保存。    </p>
+<h2 id="数据库线程池的合理使用"><a href="#数据库线程池的合理使用" class="headerlink" title="数据库线程池的合理使用"></a>数据库线程池的合理使用</h2><p>现在数据库的操作都是使用线程池的，线程池主要是用来控制数据库的连接数，其实连接池是不属于数据库范畴，但是，一般我们使用和数据库结合非常紧密，所以在这里一并说明。<br>一般线程池都会有这样的几个参数：  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最小连接数</td>
+<td>不管是否有数据库的操作，这几个连接都会一直存在，</td>
+</tr>
+<tr>
+<td>最大连接数</td>
+<td>允许的最大的连接数，如果超过了这个数据，则无法申请连接，只能等待，或者异常  </td>
+</tr>
+<tr>
+<td>回收时间</td>
+<td>多长时间会对所有的连接进行一次断开，然后重新连接。  </td>
+</tr>
+<tr>
+<td>释放时间</td>
+<td>多长时间没有进行操作的连接，会释放  </td>
+</tr>
+</tbody>
+</table>
+<p>基本所有的连接池都会有这几个参数，可能不同的连接池参数名不同，但是作用是一样的。  这里我们重点说一下最大连接数，这个是很容易忽略的一个设置。<br>很多人设置最大连接数的时候，喜欢设置的很大，例如设置为5000，但是一般mysql的数据库一个实例连接默认才1000，连接数超过这个了数据库也无法处理，设置的再大其实是没用的。  </p>
+<blockquote>
+<p> 服务器数量 * 最大连接数  &lt; 数据库最大连接数 </p>
+</blockquote>
+<p>而且，这还是在一个实例，一个数据库的情况下，至于多个数据库：<br>我建议 </p>
+<blockquote>
+<p>服务器数量 <em> 最大连接数 </em> 数据库数量 &lt; 数据库最大连接数  </p>
+</blockquote>
+<p>如果单个数据库占用了太多的数据库连接，会影响到其他数据库，导致其他数据库也无法使用。<br>当然，这个值大家可以根据业务去进行合理的估算，高频的业务分配多一点，低频的业务分配少一点。不要盲目的一味设置连接池的最大值。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如今，虽然各种各样的存储方式出现，但是关系数据库一直是我们系统的最重要的组成部分，尽量不要过早暴露数据库应对并发的短板，设计数据库和操作数据库在我们的开发中应该是一件很神圣的事情，认证对待关系的数据库的每一个操作才是明智之举。   </p>
+<p>扩展阅读：<br><a href="https://www.cnblogs.com/joylee/p/7768457.html" target="_blank" rel="noopener">数据库的使用你可能忽略了这些</a><br><a href="https://www.cnblogs.com/joylee/p/7513038.html" target="_blank" rel="noopener">学会数据库读写分离、分表分库——用Mycat，这一篇就够了！</a>    </p>
+<hr>
+<p>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

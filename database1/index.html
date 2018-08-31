@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>数据库的使用你可能忽略了这些 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+数据库的管理是一个非常专业的事情，对数据库的调优、监控一般是由数据库工程师完成，但是开发人员也经常与数据库打交道，即使是简单的增删改查也是有很多窍门，这里，一起来聊聊数据库中很容易忽略的问题。 
+
+
+字段长度省着点用先说说我们常用的类型的存储长度： 
+
+
+
+列类型
+存储长度
+
+
+
+
+tinyint
+1字节
+
+
+smallint
+2字节
+
+
+int
+4字节
+
+
+bigint
+8字节
+
+
+float
+4字节
+
+
+decimal(m,d)
+0-4字节
+
+
+datetime
+8字节
+
+
+timesta" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字段长度省着点用"><span class="toc-number">1.</span> <span class="toc-text">字段长度省着点用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#放弃uuid-guid-的使用"><span class="toc-number">2.</span> <span class="toc-text">放弃uuid(guid)的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大表减少联表，最好是单表查询"><span class="toc-number">3.</span> <span class="toc-text">大表减少联表，最好是单表查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引的正确处理方式"><span class="toc-number">4.</span> <span class="toc-text">索引的正确处理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多查几次比联表可能要好"><span class="toc-number">5.</span> <span class="toc-text">多查几次比联表可能要好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尽量使用简单的数据库脚本"><span class="toc-number">6.</span> <span class="toc-text">尽量使用简单的数据库脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尽量去避免聚合操作"><span class="toc-number">7.</span> <span class="toc-text">尽量去避免聚合操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            数据库的使用你可能忽略了这些
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/database1/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>数据库的管理是一个非常专业的事情，对数据库的调优、监控一般是由数据库工程师完成，但是开发人员也经常与数据库打交道，即使是简单的增删改查也是有很多窍门，这里，一起来聊聊数据库中很容易忽略的问题。 </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="字段长度省着点用"><a href="#字段长度省着点用" class="headerlink" title="字段长度省着点用"></a>字段长度省着点用</h2><p>先说说我们常用的类型的存储长度： </p>
+<table>
+<thead>
+<tr>
+<th>列类型</th>
+<th>存储长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tinyint</td>
+<td>1字节</td>
+</tr>
+<tr>
+<td>smallint</td>
+<td>2字节</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4字节</td>
+</tr>
+<tr>
+<td>bigint</td>
+<td>8字节</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4字节</td>
+</tr>
+<tr>
+<td>decimal(m,d)</td>
+<td>0-4字节</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>8字节</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>4字节</td>
+</tr>
+<tr>
+<td>char(m)</td>
+<td>m个字节</td>
+</tr>
+<tr>
+<td>varchar(m)</td>
+<td>可变长度</td>
+</tr>
+<tr>
+<td>text</td>
+<td>可变长度</td>
+</tr>
+</tbody>
+</table>
+<p>很明显，不同的类型存储的长度有很大区别的，对查询的效率有影响，字段长度对索引的影响是很大的。</p>
+<ul>
+<li>字符串字段长度都差不多的，可以预估长度的，用char</li>
+<li>字符串长度差异大，用varchar,限制长度，不要浪费空间</li>
+<li>整型根据大小，选择合适的类型</li>
+<li>时间建议用timestamp</li>
+<li>建议使用decimal，不建议使用float,如果是价格，可以考虑用int或bigint，如1元，存储的就是100</li>
+</ul>
+<h2 id="放弃uuid-guid-的使用"><a href="#放弃uuid-guid-的使用" class="headerlink" title="放弃uuid(guid)的使用"></a>放弃uuid(guid)的使用</h2><p>不管是uuid，还是guid，使用的时候都是为了避免同时生成重复的ID，但是建议考虑其他方案，原因如下：</p>
+<ul>
+<li>uuid没有顺序</li>
+<li>uuid太长</li>
+<li>uuid规则完全不可控  </li>
+</ul>
+<p>推荐的方案用bigint（首选），或者char来存储，生成方式参考snowflake的算法，有顺序、长度固定、比uuid更短，当然，也几乎不会重复。</p>
+<h2 id="大表减少联表，最好是单表查询"><a href="#大表减少联表，最好是单表查询" class="headerlink" title="大表减少联表，最好是单表查询"></a>大表减少联表，最好是单表查询</h2><p>单表查询的优势很多，查询效率极高，便于分表分库扩展，但是很多时候大家都觉得真正实现起来不太现实，完全失去了关系数据库的意义，但是单表的性能优势太明显，一般总会有办法解决的:</p>
+<ul>
+<li>合理的冗余字段  </li>
+<li>配合内存数据库（redis\mongodb）使用</li>
+<li>联表变多次查询（下文会有说明） </li>
+</ul>
+<p>如果考虑都后期数据量大，需要分表分库，就应该尽早实时单表查询，现在的数据库分表分库的中间件基本都无法支持联表查询。即使如mycat最多支持两个表的联表查询，但是也有很明显的性能损耗。</p>
+<h2 id="索引的正确处理方式"><a href="#索引的正确处理方式" class="headerlink" title="索引的正确处理方式"></a>索引的正确处理方式</h2><p>索引的优势这里就不多说了，索引使用不当会有反效果：</p>
+<ul>
+<li>数据量很小的表，不需要索引</li>
+<li>一个表的索引不宜过多，建议最多就5个，索引不可能满足所有的场景，但是了个满足绝大部分的场景</li>
+<li>mysql 和 sqlserver的索引差别还挺大的，需要注意。例如：<br>mysql索引字段的顺序对性能有很大影响，sqlserver优化过，影响很小</li>
+</ul>
+<h2 id="多查几次比联表可能要好"><a href="#多查几次比联表可能要好" class="headerlink" title="多查几次比联表可能要好"></a>多查几次比联表可能要好</h2><p>提出这个方案相信会得到很多人的反对，但是我相信这个结论还是非常适合数据量大的场景。多查几次数据库有这么几个弊端：</p>
+<ul>
+<li>增加了网络消耗</li>
+<li>增加了数据库的连接数  </li>
+</ul>
+<p>其实，这两个问题在现在基本都可以忽略的，数据库和应用的连接基本都是内网，这个网络连接的效率还是很高的。数据库对连接池的优化已经比较成熟了，连接数只要不是太多，影响也不会太严重，但是多查几次的优势却很多：</p>
+<ul>
+<li>单表效率更高</li>
+<li>便于后期扩展分表分库库</li>
+<li>有效利用数据库本身的结果缓存</li>
+<li>减少锁表，联表会锁多个表</li>
+</ul>
+<p>当然，多查几次这个度一定要把握。千万不要在一个循环里面查询数据库。我们也应该尽量减少查询数据库的次数。我们可以接受1次查询变2次查询，如果你变成10次查询，那就要放弃了。<br>举个例子：<br>查询商品的时候，需要显示分类表的分类名<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> category.name,product.name <span class="keyword">from</span> product  <span class="keyword">inner</span> <span class="keyword">join</span> <span class="keyword">category</span> <span class="keyword">on</span> p.categoryid=category.id</span><br></pre></td></tr></table></figure></p>
+<p>建议的方式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> categoryid,<span class="keyword">name</span>  <span class="keyword">from</span> product </span><br><span class="line"><span class="keyword">select</span> categoryname <span class="keyword">from</span> <span class="keyword">category</span> <span class="keyword">where</span> categoryid <span class="keyword">in</span> (<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+<p>当然，你可以再优化一下，查询分类名之前，对product的categoryid排序一下，这样速度更快。因为我们前面已经用snowflake生成了有顺序的主键了。<br>补充一下，in的效率并不是你想象的那么慢，如果保持在100个节点（很多书籍介绍1000个节点，我们保守一点），性能还是很高的。</p>
+<h2 id="尽量使用简单的数据库脚本"><a href="#尽量使用简单的数据库脚本" class="headerlink" title="尽量使用简单的数据库脚本"></a>尽量使用简单的数据库脚本</h2><p>很多用过 .net Entity Framework 的人都说这个框架太慢，其实慢主要是两点：错误的使用延迟加载（外键关联）、生成SQL编译太慢。Entity Framework生成的SQL脚本有太多没用的东西，导致编译太慢。<br>数据库脚本尽量使用简单的，不要用太长的一个SQL脚本，会导致初次执行的时候，编译SQL脚本花费太多的时间。</p>
+<h2 id="尽量去避免聚合操作"><a href="#尽量去避免聚合操作" class="headerlink" title="尽量去避免聚合操作"></a>尽量去避免聚合操作</h2><p>聚合操作如count,group等，是数据库性能的大杀手，经常会出现大面积的表扫描和索表的情况，所以大家能看到很多平台都把数量的计算给隐藏了，商品查询不去实时显示count的结果。如淘宝，就不显示查询结果的数量，只是显示前100页。<br>避免聚合操作的方法就是将实时的count计算结果用字段去存储，去累加这个结果。当然，也可以考虑用spark等实时计算框架去处理，这种高深的技术，不在此次讨论范围内。（PS:主要是我也不懂）   </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>程序的优化很多时候都是一些细节的问题，更应该注意平时的积累，阿里SQL的规范有很多可以吸取的地方，以上也是自己工作中的一些总结。<br>（完）</p>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

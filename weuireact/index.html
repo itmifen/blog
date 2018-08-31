@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>weui-react项目实战新心得 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="weui-react简介weui是微信官方制作的一个基础样式UI库，打造与原生微信同样的视觉和交互体验，整个UI库包括网页版和小程序版，网页版包括传统的javascript版和react版本。个人对react的偏爱超过传统js版本，就用了react版本做为自己的核心框架。weui-react 官网：点击这里  
+背景介绍计划做一个基于图书交换平台，大家可以通过平台发布自己的闲置书籍，如有人愿意通过自己的闲置书籍进行交换，即可达成交易。作为一个后端的开发人员，想做一些可以上线运营的项目，没有好的前" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#weui-react简介"><span class="toc-number">1.</span> <span class="toc-text">weui-react简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#背景介绍"><span class="toc-number">2.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用心得"><span class="toc-number">3.</span> <span class="toc-text">使用心得</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#升级到ES6"><span class="toc-number">3.1.</span> <span class="toc-text">升级到ES6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多看官方示例，文档基本没什么意义"><span class="toc-number">3.2.</span> <span class="toc-text">多看官方示例，文档基本没什么意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用wepack提升工作效率"><span class="toc-number">3.3.</span> <span class="toc-text">使用wepack提升工作效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-router"><span class="toc-number">3.4.</span> <span class="toc-text">react-router</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#界面预览"><span class="toc-number">4.</span> <span class="toc-text">界面预览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">5.</span> <span class="toc-text">最后</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            weui-react项目实战新心得
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/weuireact/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="weui-react简介"><a href="#weui-react简介" class="headerlink" title="weui-react简介"></a>weui-react简介</h2><p>weui是微信官方制作的一个基础样式UI库，打造与原生微信同样的视觉和交互体验，整个UI库包括网页版和小程序版，网页版包括传统的javascript版和react版本。<br>个人对react的偏爱超过传统js版本，就用了react版本做为自己的核心框架。<br>weui-react 官网：<a href="https://weui.github.io/react-weui/docs/#/react-weui/docs/page/0/articles/0" target="_blank" rel="noopener">点击这里</a>  </p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>计划做一个基于图书交换平台，大家可以通过平台发布自己的闲置书籍，如有人愿意通过自己的闲置书籍进行交换，即可达成交易。<br>作为一个后端的开发人员，想做一些可以上线运营的项目，没有好的前端配合是很难完成的。现在越来越多的开源UI可以使用，基本上能够上手即用。<br>为了便于开发，把精力更多的放在业务和后端，对前端的技术栈进行了选择，基于微信的项目，我选择这样的核心框架：<br><strong>基础框架：react</strong><br><strong>UI框架：weui-react</strong><br><strong>构建工具: webpack</strong><br><strong>路由工具: react-router</strong></p>
+<a id="more"></a>
+<h2 id="使用心得"><a href="#使用心得" class="headerlink" title="使用心得"></a>使用心得</h2><blockquote>
+<p>具体的入门使用方法我就不介绍了，很简单，看官方文档。其实，现在的前端框架使用都是很简单的，基本都是npm install 、然后就是import 搞定，这是前端这些非常明显的进步。  </p>
+</blockquote>
+<h3 id="升级到ES6"><a href="#升级到ES6" class="headerlink" title="升级到ES6"></a>升级到ES6</h3><p>weui-react使用的前提是对react有一个基本认识，weui-react使用的是es6的语法，如果大家还在使用es5，依然是可以兼容的,但还是强烈建议大家还是切换到es6，这个是趋势，真的比es5的语法好很多，对于我们这种后端开发人员，es6的语法还是感觉很亲切的。</p>
+<h3 id="多看官方示例，文档基本没什么意义"><a href="#多看官方示例，文档基本没什么意义" class="headerlink" title="多看官方示例，文档基本没什么意义"></a>多看官方示例，文档基本没什么意义</h3><p>weui的官方文档，相比开放平台的文档，还是有不少差距的，单是好在weui本身就是一个很简答的框架，使用起来也没有太大的问题，主要还是通过示例去了解使用方法，具体的文档说明，基本可以忽略。  </p>
+<h3 id="使用wepack提升工作效率"><a href="#使用wepack提升工作效率" class="headerlink" title="使用wepack提升工作效率"></a>使用wepack提升工作效率</h3><p>使用时，强烈建议以webpack作为构建工具，虽然入门需要点时间，但是熟悉后真的是事半功倍。  </p>
+<h3 id="react-router"><a href="#react-router" class="headerlink" title="react-router"></a>react-router</h3><p>单页面开发的时候，都会有很难点，就是页面间的路由，react还是推荐使用react-router,新旧版本的使用还是有些差别，建议直接用最新版本，虽然资料少了点，但是英文文档还是挺清晰的。这里可能要多换点时间调试。</p>
+<h2 id="界面预览"><a href="#界面预览" class="headerlink" title="界面预览"></a>界面预览</h2><p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fpx3c8o8vrj31jk0xbame.jpg" alt="">  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fpx3cwsp76j31jk0xb43g.jpg" alt=""></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>代码地址：<a href="https://github.com/itmifen/bookdrift" target="_blank" rel="noopener">https://github.com/itmifen/bookdrift</a><br>现在还在做后端接口的开发，逐渐会完成前后端的代码，前后端的代码都会全部开源。欢迎fork。</p>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

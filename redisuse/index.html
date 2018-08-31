@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>Redis常见的应用场景解析 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+Redis是一个key-value存储系统，现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用，这里介绍下Redis经常遇到的使用场景。  
+
+Redis特性一个产品的使用场景肯定是需要根据产品的特性，先列举一下Redis的特点：
+
+读写性能优异
+持久化
+数据类型丰富
+单线程
+数据自动过期
+发布订阅
+分布式
+
+这里我们通过几个场景，不同维度说下Redis的应用。
+
+高性能适合当做缓存缓存是Redis最常见的应用场景，之所有这么使用，主要是因为Redis读写性能优异" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis特性"><span class="toc-number">1.</span> <span class="toc-text">Redis特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高性能适合当做缓存"><span class="toc-number">2.</span> <span class="toc-text">高性能适合当做缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丰富的数据格式性能更高，应用场景丰富"><span class="toc-number">3.</span> <span class="toc-text">丰富的数据格式性能更高，应用场景丰富</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单线程可以作为分布式锁"><span class="toc-number">4.</span> <span class="toc-text">单线程可以作为分布式锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动过期能有效提升开发效率"><span class="toc-number">5.</span> <span class="toc-text">自动过期能有效提升开发效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式和持久化有效应对海量数据和高并发"><span class="toc-number">6.</span> <span class="toc-text">分布式和持久化有效应对海量数据和高并发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例：秒杀和Redis的结合"><span class="toc-number">7.</span> <span class="toc-text">示例：秒杀和Redis的结合</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Redis常见的应用场景解析
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/redisuse/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>Redis是一个key-value存储系统，现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用，这里介绍下Redis经常遇到的使用场景。  </p>
+</blockquote>
+<h2 id="Redis特性"><a href="#Redis特性" class="headerlink" title="Redis特性"></a>Redis特性</h2><p>一个产品的使用场景肯定是需要根据产品的特性，先列举一下Redis的特点：</p>
+<ul>
+<li>读写性能优异</li>
+<li>持久化</li>
+<li>数据类型丰富</li>
+<li>单线程</li>
+<li>数据自动过期</li>
+<li>发布订阅</li>
+<li>分布式</li>
+</ul>
+<p>这里我们通过几个场景，不同维度说下Redis的应用。</p>
+<a id="more"></a>
+<h2 id="高性能适合当做缓存"><a href="#高性能适合当做缓存" class="headerlink" title="高性能适合当做缓存"></a>高性能适合当做缓存</h2><p>缓存是Redis最常见的应用场景，之所有这么使用，主要是因为Redis读写性能优异。而且逐渐有取代memcached，成为首选服务端缓存的组件。而且，Redis内部是支持事务的，在使用时候能有效保证数据的一致性。<br>作为缓存使用时，一般有两种方式保存数据：</p>
+<ul>
+<li>1、读取前，先去读Redis，如果没有数据，读取数据库，将数据拉入Redis。</li>
+<li>2、插入数据时，同时写入Redis。  </li>
+</ul>
+<p>方案一：实施起来简单，但是有两个需要注意的地方：<br>1、避免缓存击穿。（数据库没有就需要命中的数据，导致Redis一直没有数据，而一直命中数据库。）<br>2、数据的实时性相对会差一点。  </p>
+<p>方案二：数据实时性强，但是开发时不便于统一处理。</p>
+<p>当然，两种方式根据实际情况来适用。如：方案一适用于对于数据实时性要求不是特别高的场景。方案二适用于字典表、数据量不大的数据存储。</p>
+<h2 id="丰富的数据格式性能更高，应用场景丰富"><a href="#丰富的数据格式性能更高，应用场景丰富" class="headerlink" title="丰富的数据格式性能更高，应用场景丰富"></a>丰富的数据格式性能更高，应用场景丰富</h2><p>Redis相比其他缓存，有一个非常大的优势，就是支持多种数据类型。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>string</td>
+<td>字符串，最简单的k-v存储</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>hash格式，value为field和value，适合ID-Detail这样的场景。</td>
+</tr>
+<tr>
+<td>list</td>
+<td>简单的list，顺序列表，支持首位或者末尾插入数据</td>
+</tr>
+<tr>
+<td>set</td>
+<td>无序list，查找速度快，适合交集、并集、差集处理</td>
+</tr>
+<tr>
+<td>sorted set</td>
+<td>有序的set</td>
+</tr>
+</tbody>
+</table>
+<p>其实，通过上面的数据类型的特性，基本就能想到合适的应用场景了。</p>
+<ul>
+<li>string——适合最简单的k-v存储，类似于memcached的存储结构，短信验证码，配置信息等，就用这种类型来存储。</li>
+<li>hash——一般key为ID或者唯一标示，value对应的就是详情了。如商品详情，个人信息详情，新闻详情等。</li>
+<li>list——因为list是有序的，比较适合存储一些有序且数据相对固定的数据。如省市区表、字典表等。因为list是有序的，适合根据写入的时间来排序，如：最新的***，消息队列等。</li>
+<li>set——可以简单的理解为ID-List的模式，如微博中一个人有哪些好友，set最牛的地方在于，可以对两个set提供交集、并集、差集操作。例如：查找两个人共同的好友等。</li>
+<li>Sorted Set——是set的增强版本，增加了一个score参数，自动会根据score的值进行排序。比较适合类似于top 10等不根据插入的时间来排序的数据。</li>
+</ul>
+<p>如上所述，虽然Redis不像关系数据库那么复杂的数据结构，但是，也能适合很多场景，比一般的缓存数据结构要多。了解每种数据结构适合的业务场景，不仅有利于提升开发效率，也能有效利用Redis的性能。</p>
+<h2 id="单线程可以作为分布式锁"><a href="#单线程可以作为分布式锁" class="headerlink" title="单线程可以作为分布式锁"></a>单线程可以作为分布式锁</h2><p>谈到Redis和Memcached 的区别，大家更多的是谈到数据结构和持久化这两个特性，其实还有一个比较大的区别就是：</p>
+<ul>
+<li>Redis 是单线程，多路复用方式提高处理效率。</li>
+<li>Memcached 是多线程的，通过CPU线程切换来提高处理效率。  </li>
+</ul>
+<p>所以Redis单线程的这个特性，其实也是很重要的应用场景，最常用的就是分布式锁。<br>应对高并发的系统，都是用多服务器部署，每个技术框架针对数据锁都有很好的处理方式，如 .net 的lock,java 的synchronized,都能通过锁住某个对象来应对线程导致的数据污染问题。但是毕竟，只能控制本服务器的线程，分布式部署以后数据污染问题，就比较难处理了。Redis的单线程这个特性，就非常符合这个需求，伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//产生锁</span></span><br><span class="line"><span class="keyword">while</span> lock!=<span class="number">1</span></span><br><span class="line">    <span class="comment">//过期时间是为了避免死锁</span></span><br><span class="line">    now = <span class="keyword">int</span>(time.time())</span><br><span class="line">    lock_timeout = now + LOCK_TIMEOUT + <span class="number">1</span></span><br><span class="line">    lock = redis_client.setnx(lock_key, lock_timeout)</span><br><span class="line"></span><br><span class="line"><span class="comment">//真正要处理的业务</span></span><br><span class="line">doing() </span><br><span class="line"></span><br><span class="line"><span class="comment">//释放锁</span></span><br><span class="line">now = <span class="keyword">int</span>(time.time())</span><br><span class="line"><span class="keyword">if</span> now &lt; lock_timeout:</span><br><span class="line">    redis_client.delete(lock_key)</span><br></pre></td></tr></table></figure>
+<p>以上是一个只说明流程的伪代码，其实整体的逻辑是很简单的，只要考虑到死锁时的情况，就比较好处理了。Redis作为分布式锁，因为其性能的优势，不会成为瓶颈，一般会产生瓶颈的是真正的业务处理内容，还是尽量缩小锁的范围来确保系统性能。</p>
+<h2 id="自动过期能有效提升开发效率"><a href="#自动过期能有效提升开发效率" class="headerlink" title="自动过期能有效提升开发效率"></a>自动过期能有效提升开发效率</h2><p>Redis针对数据都可以设置过期时间，这个特点也是大家应用比较多的，过期的数据清理无需使用方去关注，所以开发效率也比较高，当然，性能也比较高。最常见的就是：短信验证码、具有时间性的商品展示等。无需像数据库还要去查时间进行对比。因为使用比较简单，就不赘述了。</p>
+<h2 id="分布式和持久化有效应对海量数据和高并发"><a href="#分布式和持久化有效应对海量数据和高并发" class="headerlink" title="分布式和持久化有效应对海量数据和高并发"></a>分布式和持久化有效应对海量数据和高并发</h2><p>Redis初期的版本官方只是支持单机或者简单的主从，大多应用则都是自己去开发集群的中间件，但是随着应用越来越广泛，用户关于分布式的呼声越来越高，所以Redis 3.0版本时候官方加入了分布式的支持，主要是两个方面： </p>
+<ul>
+<li>Redis服务器主从热备，确保系统稳定性  </li>
+<li>Redis分片应对海量数据和高并发  </li>
+</ul>
+<p>而且Redis虽然是一个内存缓存，数据存在内存，但是Redis支持多种方式将数据持久化，写入硬盘，所有，Redis数据的稳定性也是非常有保障的，结合Redis的集群方案，有的系统已经将Redis当做一种NoSql数据存储来适用。</p>
+<h2 id="示例：秒杀和Redis的结合"><a href="#示例：秒杀和Redis的结合" class="headerlink" title="示例：秒杀和Redis的结合"></a>示例：秒杀和Redis的结合</h2><p>秒杀是现在互联网系统中常见的营销模式，作为开发者，其实最不愿意这样的活动，因为非技术人员无法理解到其中的技术难度，导致在资源协调上总是有些偏差。秒杀其实经常会出现的问题包括：</p>
+<ul>
+<li>并发太高导致程序阻塞。  </li>
+<li>库存无法有效控制，出现超卖的情况。  </li>
+</ul>
+<p>其实解决这些问题基本就两个方案：</p>
+<ul>
+<li>数据尽量缓存,阻断用户和数据库的直接交互。</li>
+<li>通过锁来控制避免超卖现象。  </li>
+</ul>
+<p>现在说明一下，如果现在做一个秒杀，那么，Redis应该如何结合进行使用?    </p>
+<ul>
+<li>提前预热数据，放入Redis</li>
+<li>商品列表放入Redis List  </li>
+<li>商品的详情数据 Redis hash保存，设置过期时间     </li>
+<li>商品的库存数据Redis sorted set保存  </li>
+<li>用户的地址信息Redis set保存  </li>
+<li>订单产生扣库存通过Redis制造分布式锁，库存同步扣除  </li>
+<li>订单产生后发货的数据，产生Redis list，通过消息队列处理</li>
+<li>秒杀结束后，再把Redis数据和数据库进行同步  </li>
+</ul>
+<p>以上是一个简略的秒杀系统和Redis结合的方案，当然实际可能还会引入http缓存，或者将消息对接用MQ代替等方案，也会出现业务遗漏的情况，这个只是希望能抛砖引玉。  </p>
+<blockquote>
+<p>每个技术都有属于自己的应用场景，只有对技术的特点有一定清晰的认识，才能更好的利用技术，发挥其最大的优势。   </p>
+</blockquote>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>基于react native打造属于自己的博客app | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+关注react native这个技术很久了，去年就做了一个简单的Demo,最近有时间，重新了解了一下react native的现状，发现已经有很大的进步，现在完善了一下原有的项目，并重新开源共享一下。  
+
+背景对react native这个技术关注很久了，去年也花了很长时间学习，但中途因为时间问题没有进行更深入的学习。当时，react native还存在很多坑，使用起来不太方便。一年过去，现在重新开始关注react native，发现react native已经将原有的很多问题解决，相比当年" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目简介"><span class="toc-number">2.</span> <span class="toc-text">项目简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用的主要技术和插件："><span class="toc-number">2.1.</span> <span class="toc-text">使用的主要技术和插件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目结构"><span class="toc-number">2.2.</span> <span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">2.3.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目技术说明"><span class="toc-number">3.</span> <span class="toc-text">项目技术说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#页面导航解决方案"><span class="toc-number">3.1.</span> <span class="toc-text">页面导航解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redux"><span class="toc-number">3.2.</span> <span class="toc-text">redux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#html展示的解决方案"><span class="toc-number">3.3.</span> <span class="toc-text">html展示的解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能问题"><span class="toc-number">3.4.</span> <span class="toc-text">性能问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#页面切换性能"><span class="toc-number">3.4.1.</span> <span class="toc-text">页面切换性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#console-log日志对性能非常大的影响"><span class="toc-number">3.4.2.</span> <span class="toc-text">console.log日志对性能非常大的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列表性能问题"><span class="toc-number">3.4.3.</span> <span class="toc-text">列表性能问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后期计划"><span class="toc-number">4.</span> <span class="toc-text">后期计划</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            基于react native打造属于自己的博客app
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/reactcnblogs/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>关注react native这个技术很久了，去年就做了一个简单的Demo,最近有时间，重新了解了一下react native的现状，发现已经有很大的进步，现在完善了一下原有的项目，并重新开源共享一下。  </p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>对react native这个技术关注很久了，去年也花了很长时间学习，但中途因为时间问题没有进行更深入的学习。当时，react native还存在很多坑，使用起来不太方便。一年过去，现在重新开始关注react native，发现react native已经将原有的很多问题解决，相比当年版本，有太多的进步。现在将原有项目重构并重新发布到github。</p>
+<a id="more"></a>
+<h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>基于博客园的接口，开发的一个博客的app工具，包括个人博客、博客首页、博客详情，后续会逐渐完善评论、推荐、以及新闻等相关模块。  </p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fkl2de20oxj31kw0xrnkr.jpg" alt="">  </p>
+<h3 id="使用的主要技术和插件："><a href="#使用的主要技术和插件：" class="headerlink" title="使用的主要技术和插件："></a>使用的主要技术和插件：</h3><table>
+<thead>
+<tr>
+<th>插件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>react redux</td>
+<td>react state管理方案</td>
+</tr>
+<tr>
+<td>react-navigation</td>
+<td>react native新的页面导航方案</td>
+</tr>
+<tr>
+<td>react-native-elements</td>
+<td>一个react native UI库</td>
+</tr>
+<tr>
+<td>lodash</td>
+<td>JS函数库</td>
+</tr>
+<tr>
+<td>react-native-autoheight-webview</td>
+<td>webview解决方案</td>
+</tr>
+<tr>
+<td>react-native-vector-icons</td>
+<td>react native  icon组件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>代码全部在source目录里，其他代码有react native自动生成，当然，index.js相关入口文件有调整，source中目录简单介绍一下：</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>action</td>
+<td>redux中的action</td>
+</tr>
+<tr>
+<td>common</td>
+<td>通用的js常用函数</td>
+</tr>
+<tr>
+<td>component</td>
+<td>自己的UI组件</td>
+</tr>
+<tr>
+<td>config</td>
+<td>项目的配置信息，需要改成自己项目的，调整这里。</td>
+</tr>
+<tr>
+<td>constant</td>
+<td>定义的一些常量</td>
+</tr>
+<tr>
+<td>middleware</td>
+<td>react middleware log，记录state日志  </td>
+</tr>
+<tr>
+<td>reducer</td>
+<td>redux中的reducer</td>
+</tr>
+<tr>
+<td>service</td>
+<td>网络请求，调用接口相关</td>
+</tr>
+<tr>
+<td>style</td>
+<td>样式</td>
+</tr>
+<tr>
+<td>view</td>
+<td>页面page</td>
+</tr>
+</tbody>
+</table>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>最基本的react native使用方式：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/itmifen/mfreader.git  </span><br><span class="line">npm install  </span><br><span class="line">react-native link  </span><br><span class="line">react-native run-ios</span><br></pre></td></tr></table></figure></p>
+<p>正常运行需要将config目录中的index.js文件中的accessInfo进行配置。clientId和clientSecret可以联系博客园团队获取。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//cnblogs授权信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> accessInfo=&#123;</span><br><span class="line">    clientId:<span class="string">"*********"</span>,</span><br><span class="line">    clientSecret:<span class="string">"**************"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>首页展示自己的博客只需要修改blogname就可以了。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app配置信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> appinfo=&#123;</span><br><span class="line">	blogname:<span class="string">"joylee"</span>,</span><br><span class="line">	logourl:<span class="string">"https://pic.cnblogs.com/face/42030/20171003230725.png"</span>,</span><br><span class="line">	cnblogsApi:<span class="string">"https://api.cnblogs.com"</span>,</span><br><span class="line">	pageSize:<span class="number">10</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="项目技术说明"><a href="#项目技术说明" class="headerlink" title="项目技术说明"></a>项目技术说明</h2><h3 id="页面导航解决方案"><a href="#页面导航解决方案" class="headerlink" title="页面导航解决方案"></a>页面导航解决方案</h3><p>之前版本的react native 的页面导航没有一个很好的解决方案，最大的问题就是页面切换的卡顿，很多第三方的导航组件使用起来性能更差，还不如自己开发。现在官方推荐使用 react-navigation 组件进行开发，使用之后的确比之前性能好很多，同时还支持tab、侧边栏导航效果，是以后react native开发必须考虑的方案。  </p>
+<h3 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h3><p>redux现在是react state管理最通用的解决方案，使用非常广泛，我也不曾想到redux的学习花了我最多的时间。redux是一个state管理的解决方案，是一个单独的项目，react redux是基于react 的解决方案，而异步的react redux会更加复杂一点。对于redux的学习和使用，经历了好久才真正理解redux的整个数据流和事件流。</p>
+<h3 id="html展示的解决方案"><a href="#html展示的解决方案" class="headerlink" title="html展示的解决方案"></a>html展示的解决方案</h3><p>展示webview一直是一个头疼的问题，虽然通过 <a href="https://js.coach" target="_blank" rel="noopener">https://js.coach</a> 可以找到很多webview的解决方案，大部分看起来很好的解决方案是将html转成原生的jsx节点。实际使用和最终的理想还是有差距的，最后我还是选择了webview渲染html的方案。我使用的是react-native-autoheight-webview 这个组件，原始的webview组件必须设置高度，react-native-autoheight-webview可以不用设置高度，自动根据内容定义高度。  </p>
+<h3 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h3><h4 id="页面切换性能"><a href="#页面切换性能" class="headerlink" title="页面切换性能"></a>页面切换性能</h4><p>强烈建议使用react-navigation，直接使用navigation组件，总是存在卡顿的情况，android环境特别明显，使用react-navigation整个人都好了。基本不用考虑其他黑科技。  </p>
+<h4 id="console-log日志对性能非常大的影响"><a href="#console-log日志对性能非常大的影响" class="headerlink" title="console.log日志对性能非常大的影响"></a>console.log日志对性能非常大的影响</h4><p>如果一直觉得开发调试的时候系统卡顿明显，建议把console.log去掉试试，console.log对性能影响严重，debug模式下也会感觉比较慢，开发完成后，最好是在release环境下测试下。  </p>
+<h4 id="列表性能问题"><a href="#列表性能问题" class="headerlink" title="列表性能问题"></a>列表性能问题</h4><p>很多人反馈列表性能的问题，我一直用listview，暂时没有感觉到性能的问题，所有还没有换成新的组件FlatList,后期会考虑替换，相信官方的推荐和解决方案，都是比较靠谱的解决方案。  </p>
+<blockquote>
+<p>性能问题大家一定要仔细阅读 <a href="http://reactnative.cn/docs/0.49/performance.html#content" target="_blank" rel="noopener">http://reactnative.cn/docs/0.49/performance.html#content</a> 官方的性能说明，每一个都非常重要。  </p>
+</blockquote>
+<h2 id="后期计划"><a href="#后期计划" class="headerlink" title="后期计划"></a>后期计划</h2><p>因时间有限，所有在UI上不会做太多的调整，这也不是我擅长的，关于功能会进行逐步完善：</p>
+<ul>
+<li>增加新闻模块  </li>
+<li>增加评论浏览和评论功能  </li>
+<li>增加博客园首页和精华  </li>
+<li>完善个人中心以及相关设置</li>
+</ul>
+<p>曾经考虑过做成多个站点聚合数据的形式，但是考虑到工作量的问题，可能短时间内无法实现。  </p>
+<p>（完）</p>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>

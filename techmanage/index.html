@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>技术知识和稳定的系统之间，可能还差这些？ | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+前言：很多人都说——程序一门艺术，对于这个说法，以前我是很难理解的，程序就是一个工具，一门学问，怎么会是一门艺术呢，后来工作越深入，考虑的东西越多，发现程序的确是一门艺术。什么是艺术呢？通过捕捉与挖掘、感受与分析、整合与运用，通过感受得到的形式展示出来的阶段性结果。程序不只是你写出来，运行起来就成功了，而是需要感受和分析、需要整合运用，需要最终变成成果。显然，程序是符合艺术的标准。艺术的展现除了术，还需要道。程序的术是大家都能得到的共识，各种各样提升自己技术的文章到处都是，这里我们说说程序的道" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于开发"><span class="toc-number">1.</span> <span class="toc-text">关于开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注释以及代码规范——程序是写给人看的，其次才是给机器用的"><span class="toc-number">1.1.</span> <span class="toc-text">注释以及代码规范——程序是写给人看的，其次才是给机器用的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常的处理——程序的错误存在，就在你身边"><span class="toc-number">1.2.</span> <span class="toc-text">异常的处理——程序的错误存在，就在你身边</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码洁癖——代码一定要追求完美"><span class="toc-number">1.3.</span> <span class="toc-text">代码洁癖——代码一定要追求完美</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码的最终结果是变成成果——一定要定义deadline"><span class="toc-number">1.4.</span> <span class="toc-text">代码的最终结果是变成成果——一定要定义deadline</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于集成"><span class="toc-number">2.</span> <span class="toc-text">关于集成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#测试代码是节省时间，而不是影响进度"><span class="toc-number">2.1.</span> <span class="toc-text">测试代码是节省时间，而不是影响进度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动化测试是增强自信的最佳方式"><span class="toc-number">2.2.</span> <span class="toc-text">自动化测试是增强自信的最佳方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码也随时处于能被发布的状态"><span class="toc-number">2.3.</span> <span class="toc-text">代码也随时处于能被发布的状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于协作"><span class="toc-number">3.</span> <span class="toc-text">关于协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码是共享的，你的代码大家应该都能修改"><span class="toc-number">3.1.</span> <span class="toc-text">代码是共享的，你的代码大家应该都能修改</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            技术知识和稳定的系统之间，可能还差这些？
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/techmanage/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/项目管理/">项目管理</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>前言：<br>很多人都说——程序一门艺术，对于这个说法，以前我是很难理解的，程序就是一个工具，一门学问，怎么会是一门艺术呢，后来工作越深入，考虑的东西越多，发现程序的确是一门艺术。什么是艺术呢？通过捕捉与挖掘、感受与分析、整合与运用，通过感受得到的形式展示出来的阶段性结果。程序不只是你写出来，运行起来就成功了，而是需要感受和分析、需要整合运用，需要最终变成成果。显然，程序是符合艺术的标准。<br>艺术的展现除了术，还需要道。程序的术是大家都能得到的共识，各种各样提升自己技术的文章到处都是，这里我们说说程序的道，也就是方法。这也是大家经常忽略或者不重视的地方。  </p>
+</blockquote>
+<p>作为一名艺术工作者（哈哈，自己也笑了。），工作中的确有太多需要注意的地方，特别是工作方法，这个东西在开发中一般是很少有人来培训自己，或者花时间来教自己，这个需要自己去学习、总结。我自己越到后面越总是这方面的学习，这里我也来说说自己工作中自己爬过的坑以及身边的同伴趟过的路。</p>
+<a id="more"></a>
+<h2 id="关于开发"><a href="#关于开发" class="headerlink" title="关于开发"></a>关于开发</h2><h3 id="注释以及代码规范——程序是写给人看的，其次才是给机器用的"><a href="#注释以及代码规范——程序是写给人看的，其次才是给机器用的" class="headerlink" title="注释以及代码规范——程序是写给人看的，其次才是给机器用的"></a>注释以及代码规范——程序是写给人看的，其次才是给机器用的</h3><ol>
+<li>代码规范的困难点不是制定代码规范，而是执行代码规范。执行代码规范无外乎就两种方式：</li>
+</ol>
+<ul>
+<li><p>通过代码检查。其实一般都是通过IDE的插件去检查，常用的有适用于javascript的jsHint,适用于java的checkstyle,适用于 .net 的StyleCop。自动的代码检查能检测到的问题还是比较有限的，主要是针对格式、注释、命名等，但是效率高，能把一些低级的错误扼杀，如果熟悉二次开发，还是值得多花时间去研究定制的。  </p>
+</li>
+<li><p>通过人工代码审查。这个是纯人工的方式，有些坑是工具检测不出来的。如循环里访问数据库，循环里访问网络等，这些都需要去人工判断的。我一般的方式就是在CVS工具获取代码的时候进行对比，大概的浏览一遍，就能发现一些低级的错误。这样效率相对会高一点。 </p>
+</li>
+</ul>
+<ol start="2">
+<li>别说注释影响性能，浪费时间。注释的前提是一定要能让人看得懂，别人能看懂你的代码，就能节省很多时间，不要怕注释文字多，太长。现代的语言和编译器，对注释产生的性能影响完全可以忽略不计。</li>
+</ol>
+<h3 id="异常的处理——程序的错误存在，就在你身边"><a href="#异常的处理——程序的错误存在，就在你身边" class="headerlink" title="异常的处理——程序的错误存在，就在你身边"></a>异常的处理——程序的错误存在，就在你身边</h3><p>异常处理是我们开发过程中必须要面临的问题，但是经常会有一些异常处理的方式，被错误的使用了：  </p>
+<ol>
+<li>不抛出异常，让大家都懵逼了。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">catch</span> (Exception ex)</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">null</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果测试不出这样的问题，在生产环境绝对懵B，没有错误提示、没有写入日志，根本无法找到任何错误信息，这个看起来很低级的错误，在身边的确是有人这么处理的，我见过好多了。 </p>
+<p><strong>测试和开发环境有错误一定要将详细的错误抛出来。<br>生产环境有错误也要适当的给与提示，告知错误，并且日志记录详细的错误。</strong></p>
+<ol start="2">
+<li>忽略警告信息  </li>
+</ol>
+<p>现代编译器产生错误是无法编译通过的，但是警告默认是可以忽略的。如果条件允许，大家最好把警告全部处理掉，不处理就是在给自己埋坑，很有可能在后面会爆发。  </p>
+<p>我经历过一个的一个事件就是.net调用redis的一次事故，使用的是官方推荐的驱动类库为Service.Stack.Redis,但是使用的时候忽略警告信息，导致后期版本兼容性的问题在生产环境爆发，幸好已经有其他人躺过坑，所以问题立马就处理掉了。 </p>
+<p><strong>条件允许，请解决所有的警告，如果条件有限，经常查看警告信息，重视新出现的警告信息。</strong></p>
+<h3 id="代码洁癖——代码一定要追求完美"><a href="#代码洁癖——代码一定要追求完美" class="headerlink" title="代码洁癖——代码一定要追求完美"></a>代码洁癖——代码一定要追求完美</h3><p>很多人都经历过接手别人的代码，而且程序员最害怕的就是阅读别人的代码。不管是别人的代码还是自己的代码，都要习惯性去重构，代码这门艺术不是一蹴而就的，是需要慢慢雕琢出来的。如果在开发过程中，不管是自己的代码还是别人的代码，发现问题，一定要去解决这些脏东西。代码是积累的过程，不合适的代码应该在初期就优化掉，如果越积越多，到最后只有可能是“没时间优化”和“不敢优化”。  </p>
+<p>在重构的过程中，总是会有很多理由让自己放弃这一操作，最多的两个理由就是：“没时间”和“风险太大”，持续衍生下下去，最后唯一的结果就是系统重新开发。这就是很多公司业务只是停滞不前或者稳步提升的，但是系统使用不到2年就要重做的原因。  </p>
+<h3 id="代码的最终结果是变成成果——一定要定义deadline"><a href="#代码的最终结果是变成成果——一定要定义deadline" class="headerlink" title="代码的最终结果是变成成果——一定要定义deadline"></a>代码的最终结果是变成成果——一定要定义deadline</h3><p>工作是永远做不完的，但是项目必须定义deadline，即使在没有明确考核的情况下，自己也需要给自己定义deadline，一个项目耗的太久，会让项目的弱势越来越严重，会让成本越来越高，会让开发人员的编码效率低下，所有的开发任务一定要定义deadline。<br>定义deadline还有一个好处，就是能有成果展现，这个对于企业来说，是非常重要的。技术、知识、能力一定要变现成成果，即使是做技术研究，也需要有成果的展示，而不能一直处理进行中的状态，这种意识是非常重要的。</p>
+<h2 id="关于集成"><a href="#关于集成" class="headerlink" title="关于集成"></a>关于集成</h2><h3 id="测试代码是节省时间，而不是影响进度"><a href="#测试代码是节省时间，而不是影响进度" class="headerlink" title="测试代码是节省时间，而不是影响进度"></a>测试代码是节省时间，而不是影响进度</h3><p>一定要写测试用例。测试用例绝对不会浪费你的时间，测试用例觉得不会拖慢项目的进度，而且能加快项目的进度，进度不是开发完了，就完成，你要协助测试，保证项目上线。项目的进度才是真正的进度。测试用例实施起来困难的地方就是无法坚持下来。即使，自己对自己写出来的代码负责，即使公司没有要求，自己也要习惯写测试用例。大家可以看看那些好的开源代码，都是会有自己编写的测试用例的。  </p>
+<p>现在的开发方式基本都是前后端分离，不管是web还是app，都是通过api进行数据对接，对于测试用例也更加容易测试，所有的接口都需要有对应的测试用例，如果不愿意写代码，测试工具也是有可以替代代码编程的。对于开发人员，其实写代码测试可能体验会更好，速度更加快，测试工具更多的是面向测试工程师。</p>
+<h3 id="自动化测试是增强自信的最佳方式"><a href="#自动化测试是增强自信的最佳方式" class="headerlink" title="自动化测试是增强自信的最佳方式"></a>自动化测试是增强自信的最佳方式</h3><ul>
+<li><p>自动化测试是必要的<br>随着时间的推移，系统的功能越来越多，功能越多其实意味着风险越大，出问题的可能性越来越大。随着系统的变大，人工覆盖的范围有限，自动化测试是必须要做的。</p>
+</li>
+<li><p>自动化测试应该提前规划<br>初期，通过人工基本可以覆盖所有的测试，但是后期功能越来越多，不仅要测试新功能，每个功能的开发都要进行全系统的回归测试。前文提到测试用例，这个是自动化测试的基础。有了强大的测试用例的积累，自动化测试的搭建就会更加容易。测试用例不是等到有时间，或者系统变大以后才做的，而是应该一开始就准备，不要等到系统变得非常庞大臃肿的时候才开始做，那时候你还需要重新会想当初的业务场景，得不偿失。</p>
+</li>
+</ul>
+<h3 id="代码也随时处于能被发布的状态"><a href="#代码也随时处于能被发布的状态" class="headerlink" title="代码也随时处于能被发布的状态"></a>代码也随时处于能被发布的状态</h3><p>现在的开发方式都倾向于敏捷开发，敏捷开发的优势这里就不多说了，但是敏捷开发有一个特点就是高频率的发布，所以代码应该是需要随时都处于能被发布的状态，其实这并不是很难，只要合理的使用CVS工具即可。  </p>
+<ul>
+<li>永远有一个和线上代码一直的版本。 不要一个版本走到黑啊，一定要熟悉分支的作用。 </li>
+<li>fix bug采用独立版本合并发布。采用最小发布的方式，也就是需要哪几个文件就合并哪几个文件。  </li>
+<li>建立一个灰度发布的环境，作为发布前验证的环境，和生产的环境一样，只是地址只有内部人员知道。当然，如果可以通过Nginx或者网关控制灰度发布，就最好了。</li>
+</ul>
+<h2 id="关于协作"><a href="#关于协作" class="headerlink" title="关于协作"></a>关于协作</h2><h3 id="代码是共享的，你的代码大家应该都能修改"><a href="#代码是共享的，你的代码大家应该都能修改" class="headerlink" title="代码是共享的，你的代码大家应该都能修改"></a>代码是共享的，你的代码大家应该都能修改</h3><p>作为公司代码的贡献者，不管你是总监、经理、架构还是程序员，不要认为自己的代码是别人不能修改，代码应该是共享的，只要在公司授权的范围内，我们应该是可以互相修改别人的模块。</p>
+<ul>
+<li>互相修改代码其实是代码审查的一个过程。</li>
+<li>互相修改代码便于互相熟悉业务。  </li>
+</ul>
+<p>在代码面前人人平等，谁写的代码都会有问题，有重构的空间，不能因为你的职位高或者经验足，就不让别人碰你的代码。<br>当然，有的人可能会改坏你的代码，但是这个可以通过沟通解决这个问题。</p>
+<blockquote>
+<p>有时，我们过多的关注了技术知识体系本身，却忽略了把自己的技术知识更好的运用到工作中，运用到自己的系统中，因为这些东西除了学习相关的技能，更多的是需要自己总结，随时趟过的坑越多，可能总结的东西越多，罗马不是一天建造的，系统也是不是一次就完美的，我们自己的知识体系也需要时间去积累。  </p>
+</blockquote>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
