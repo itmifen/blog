@@ -8,7 +8,7 @@
   display: inline-block;
   margin: 0 6px;
   padding: 4px 10px;
-  color: #24292e;
+  color: #444;
   border: 1px solid #464646;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -18,7 +18,7 @@
 .page-nav .page-number:hover,
 .page-nav .extend:hover {
   color: #fff;
-  background-color: #24292e;
+  background-color: #444;
 }
 .page-nav .space {
   margin: 0 4px;

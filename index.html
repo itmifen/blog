@@ -14,7 +14,7 @@
     <meta name="description" content="公众号：itmifen，IT狗，程序猿，苦B奋斗的伪文中老年" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+    <!-- <meta name="baidu-site-verification" content="F0CXvmUgA9" /> -->
 
     
     
@@ -107,10 +107,6 @@
                     <a class="thread-item" href="https://github.com/itmifen" target="_blank" rel="noopener"><i class="icon-github"></i></a>
                     
                     
-                    <a class="thread-item" href="http://m.timegoto.com/user/1" target="_blank" rel="noopener"><i class="icon-circle-more"></i></a>
-                    
-                    
-                    <a class="thread-item" href="https://twitter.com/sanonze" target="_blank" rel="noopener"><i class="icon-twitter"></i></a>
                     
                 </div>
             </div>
@@ -128,21 +124,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/mquse/">MQ(消息队列)常见的应用场景解析</a>
+            <a href="/activemq/">activeMQ 填坑记</a>
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="/mquse/">
+            <a class="article-date" href="/activemq/">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2018-07-26T22:00:00.000Z" itemprop="datePublished">2018-07-27</time>
+    <time datetime="2018-08-31T03:35:49.000Z" itemprop="datePublished">2018-08-31</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/架构/">架构</a>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
 </div>
 
 
@@ -151,11 +147,10 @@
     
     <section class="article-body markdown-body">
         
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提高系统性能首先考虑的是数据库的优化，之前一篇文章《数据库的使用你可能忽略了这些》中有提到过开发中，针对数据库需要注意的事项。但是数据库因为历史原因，横向扩展是一件非常复杂的工程，所有我们一般会尽量把流量都挡在数据库之前。<br>不管是无限的横向扩展服务器，还是纵向阻隔到达数据库的流量，都是这个思路。阻隔直达数据库的流量，缓存组件和消息组件是两大杀器。之前文章《Redis常见的应用场景解析》已经描述了最常用的缓存组件redis的应用场景，那么今天，就重点说说MQ的应用场景。</p>
-<h2 id="MQ简介"><a href="#MQ简介" class="headerlink" title="MQ简介"></a>MQ简介</h2><p>MQ,Message queue,消息队列，就是指保存消息的一个容器。具体的定义这里就不类似于数据库、缓存等，用来保存数据的。当然，与数据库、缓存等产品比较，也有自己一些特点，具体的特点后文会做详细的介绍。<br>现在常用的MQ组件有activeMQ、rabbitMQ、rocketMQ、zeroMQ,当然近年来火热的kafka,从某些场景来说，也是MQ，当然kafka的功能更加强大，虽然不同的MQ都有自己的特点和优势，但是，不管是哪种MQ，都有MQ本身自带的一些特点，下面，咱们就先聊聊MQ的特点。  </p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>MQ是现在大型系统架构中必不可少的一个重要中间件，之前有偏文章<a href="http://www.17ij.com/mquse/">《MQ(消息队列)常见的应用场景解析》</a>介绍过MQ的应用场景，现在流行的几个MQ是rabbitmq,rocketma,kafka,这几个MQ比较最容易找到相关的文章，而也有些系统使用的是activemq，因activemq是相对比较传统的MQ，在使用过程中还是会遇到很多坑，这里简单列举几个大家可能会遇到的问题，把自己使用acitvemq的经验和大家分享一下。  </p>
         
         <p class="article-more-link">
-            <a href="/mquse/#more">
+            <a href="/activemq/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
@@ -213,6 +208,49 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/mquse/">MQ(消息队列)常见的应用场景解析</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/mquse/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-07-26T22:00:00.000Z" itemprop="datePublished">2018-07-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提高系统性能首先考虑的是数据库的优化，之前一篇文章《数据库的使用你可能忽略了这些》中有提到过开发中，针对数据库需要注意的事项。但是数据库因为历史原因，横向扩展是一件非常复杂的工程，所有我们一般会尽量把流量都挡在数据库之前。<br>不管是无限的横向扩展服务器，还是纵向阻隔到达数据库的流量，都是这个思路。阻隔直达数据库的流量，缓存组件和消息组件是两大杀器。之前文章《Redis常见的应用场景解析》已经描述了最常用的缓存组件redis的应用场景，那么今天，就重点说说MQ的应用场景。</p>
+<h2 id="MQ简介"><a href="#MQ简介" class="headerlink" title="MQ简介"></a>MQ简介</h2><p>MQ,Message queue,消息队列，就是指保存消息的一个容器。具体的定义这里就不类似于数据库、缓存等，用来保存数据的。当然，与数据库、缓存等产品比较，也有自己一些特点，具体的特点后文会做详细的介绍。<br>现在常用的MQ组件有activeMQ、rabbitMQ、rocketMQ、zeroMQ,当然近年来火热的kafka,从某些场景来说，也是MQ，当然kafka的功能更加强大，虽然不同的MQ都有自己的特点和优势，但是，不管是哪种MQ，都有MQ本身自带的一些特点，下面，咱们就先聊聊MQ的特点。  </p>
+        
+        <p class="article-more-link">
+            <a href="/mquse/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/weuireact/">weui-react项目实战新心得</a>
         </h1>
         
@@ -241,51 +279,6 @@
         
         <p class="article-more-link">
             <a href="/weuireact/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/techmanage/">技术知识和稳定的系统之间，可能还差这些？</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/techmanage/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/项目管理/">项目管理</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>前言：<br>很多人都说——程序一门艺术，对于这个说法，以前我是很难理解的，程序就是一个工具，一门学问，怎么会是一门艺术呢，后来工作越深入，考虑的东西越多，发现程序的确是一门艺术。什么是艺术呢？通过捕捉与挖掘、感受与分析、整合与运用，通过感受得到的形式展示出来的阶段性结果。程序不只是你写出来，运行起来就成功了，而是需要感受和分析、需要整合运用，需要最终变成成果。显然，程序是符合艺术的标准。<br>艺术的展现除了术，还需要道。程序的术是大家都能得到的共识，各种各样提升自己技术的文章到处都是，这里我们说说程序的道，也就是方法。这也是大家经常忽略或者不重视的地方。  </p>
-</blockquote>
-<p>作为一名艺术工作者（哈哈，自己也笑了。），工作中的确有太多需要注意的地方，特别是工作方法，这个东西在开发中一般是很少有人来培训自己，或者花时间来教自己，这个需要自己去学习、总结。我自己越到后面越总是这方面的学习，这里我也来说说自己工作中自己爬过的坑以及身边的同伴趟过的路。</p>
-        
-        <p class="article-more-link">
-            <a href="/techmanage/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
@@ -387,6 +380,51 @@
         
         <p class="article-more-link">
             <a href="/redisuse/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/techmanage/">技术知识和稳定的系统之间，可能还差这些？</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/techmanage/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/项目管理/">项目管理</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>前言：<br>很多人都说——程序一门艺术，对于这个说法，以前我是很难理解的，程序就是一个工具，一门学问，怎么会是一门艺术呢，后来工作越深入，考虑的东西越多，发现程序的确是一门艺术。什么是艺术呢？通过捕捉与挖掘、感受与分析、整合与运用，通过感受得到的形式展示出来的阶段性结果。程序不只是你写出来，运行起来就成功了，而是需要感受和分析、需要整合运用，需要最终变成成果。显然，程序是符合艺术的标准。<br>艺术的展现除了术，还需要道。程序的术是大家都能得到的共识，各种各样提升自己技术的文章到处都是，这里我们说说程序的道，也就是方法。这也是大家经常忽略或者不重视的地方。  </p>
+</blockquote>
+<p>作为一名艺术工作者（哈哈，自己也笑了。），工作中的确有太多需要注意的地方，特别是工作方法，这个东西在开发中一般是很少有人来培训自己，或者花时间来教自己，这个需要自己去学习、总结。我自己越到后面越总是这方面的学习，这里我也来说说自己工作中自己爬过的坑以及身边的同伴趟过的路。</p>
+        
+        <p class="article-more-link">
+            <a href="/techmanage/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
@@ -527,50 +565,6 @@
         
         <p class="article-more-link">
             <a href="/database2/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/database1/">数据库的使用你可能忽略了这些</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/database1/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-05-31T22:00:00.000Z" itemprop="datePublished">2018-06-01</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/数据库/">数据库</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>数据库的管理是一个非常专业的事情，对数据库的调优、监控一般是由数据库工程师完成，但是开发人员也经常与数据库打交道，即使是简单的增删改查也是有很多窍门，这里，一起来聊聊数据库中很容易忽略的问题。 </p>
-</blockquote>
-        
-        <p class="article-more-link">
-            <a href="/database1/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>

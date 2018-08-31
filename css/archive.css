@@ -1,5 +1,5 @@
 .archive-year {
-  color: #24292e;
+  color: #444;
   font-size: 2em;
 }
 .archives {
@@ -9,5 +9,5 @@
   color: #4a4a4a;
 }
 .archives a:hover {
-  color: #7cc04b;
+  color: #777;
 }

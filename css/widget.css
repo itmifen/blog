@@ -6,10 +6,10 @@
   font-weight: normal;
 }
 .widget a {
-  color: rgba(36, 41, 46, 0.8);
+  color: rgba(68, 68, 68, 0.8);
 }
 .widget a:hover {
-  color: #24292e;
+  color: #444;
 }
 .widget ul {
   list-style-type: none;

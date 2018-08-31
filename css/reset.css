@@ -142,11 +142,12 @@ body {
   height: 100%;
 }
 body {
-  font-size: 14px;
+  font-size: 16px;
   font-family: -apple-system, "Microsoft YaHei", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
   line-height: 1.5;
   background-color: #fff;
   word-wrap: break-word;
+  color: #444;
 }
 @media screen and (min-width: 960px) {
   ::selection {

@@ -16,13 +16,13 @@
   font-size: 26px;
 }
 .article-header h1 a {
-  color: #24292e;
+  color: #444;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 .article-header h1 a:hover {
-  color: #7cc04b;
+  color: #777;
 }
 .article-meta {
   padding-top: 8px;
@@ -32,7 +32,7 @@
   color: #999;
 }
 .article-date:hover {
-  color: #24292e;
+  color: #444;
 }
 .article-tag-list {
   color: #999;
@@ -44,7 +44,7 @@
   color: #999;
 }
 .article-tag-link:hover {
-  color: #7cc04b;
+  color: #777;
 }
 .article-more-link {
   text-align: right;
@@ -62,7 +62,7 @@
   transition: all 0.3s ease;
 }
 .article-more-link a:hover {
-  color: #7cc04b;
+  color: #777;
   background-color: #f7f7f7;
   border-color: #dedede;
   text-decoration: none;
@@ -105,7 +105,7 @@
   height: 100%;
   line-height: 0;
   font-size: 0;
-  background-color: #24292e;
+  background-color: #444;
   opacity: 0\9;
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
