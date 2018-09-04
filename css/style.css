@@ -905,6 +905,7 @@ body {
 }
 .highlight .line {
   min-height: 20px;
+  line-height: 26px;
 }
 .highlight,
 .highlight .tag,
