@@ -127,6 +127,58 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/password/">谈谈系统密码存储策略</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/password/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-09-13T13:35:49.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>最近IT界很火的一则新闻是华住的数据库泄露问题，身边很多人在讨论数据库安全的问题，大家经常说提升密码复杂度、加密等，但是很多人并不知道在开发的时候，用户的密码怎么处理，或者说，处理的并不恰当，这篇文章主要介绍在系统设计的过程中，我们的密码究竟应该怎么处理才最大限度的保证安全。  </p>
+</blockquote>
+<h2 id="密码加密的重要性？"><a href="#密码加密的重要性？" class="headerlink" title="密码加密的重要性？"></a>密码加密的重要性？</h2><p>还是从脱库说起，数据库被人拉走了，最可怕的是什么？个人手机、身份证、地址？？这些是很重要，但是，其实个人隐私数据，获取的难度不是很大，而且不容易直接对一个人造成巨大的伤害，但是，密码被人知道了，就是很可怕的事情。因为，大部分人不同的系统都是共用密码。这个错误比较低级，但是很常见，所以，密码，是被脱库后最容易被人利用。所以，密码是必须加密的，不把用户密码加密的系统和公司，都该判刑。  </p>
+<h2 id="密码管理的入门要求"><a href="#密码管理的入门要求" class="headerlink" title="密码管理的入门要求"></a>密码管理的入门要求</h2><p>密码管理产品级别的需求，大家都能看到的是，提升密码的复杂度和管理策略，一般包括：</p>
+<ul>
+<li>密码加密保存，并且是不可逆的。</li>
+<li>密码更长更复杂。如：密码长度大于8位，必须是大小写字母和数字的组合。  </li>
+<li>定期修改密码策略。   </li>
+<li>登录输入密码错误多次，需要输入验证码，甚至是锁定账户。<br>以上都是一些基础，但是非常有效的方案，这些产品设计不是我们讨论的重点，我们重点说说具体的实现。<br>在技术上，实际密码我们是怎么存储的呢？</li>
+</ul>
+        
+        <p class="article-more-link">
+            <a href="/password/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/hexoblog/">hexo——轻量、简易、高逼格的博客</a>
         </h1>
         
@@ -301,97 +353,6 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/reactcnblogs/">基于react native打造属于自己的博客app</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/reactcnblogs/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/前端/">前端</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>关注react native这个技术很久了，去年就做了一个简单的Demo,最近有时间，重新了解了一下react native的现状，发现已经有很大的进步，现在完善了一下原有的项目，并重新开源共享一下。  </p>
-</blockquote>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>对react native这个技术关注很久了，去年也花了很长时间学习，但中途因为时间问题没有进行更深入的学习。当时，react native还存在很多坑，使用起来不太方便。一年过去，现在重新开始关注react native，发现react native已经将原有的很多问题解决，相比当年版本，有太多的进步。现在将原有项目重构并重新发布到github。</p>
-        
-        <p class="article-more-link">
-            <a href="/reactcnblogs/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/studyreflect/">你必须了解的反射——反射来实现实体验证</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/studyreflect/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>开发工作中，都会需要针对传入的参数进行验证，特别是针对实体进行验证，确保传入的参数格式正确。这里做了一个非常简单的组件进行验证。抛砖引玉，让大家深入思考下反射的应用。    </p>
-</blockquote>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>日常开发，都是通过API进行前后端的系统对接，对API参数的验证是一个使用率非常高的功能，如果能非常简便的的进行参数验证，能降低代码量，提升工作效率。 </p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>项目地址：<a href="https://github.com/itmifen/mfutility" target="_blank" rel="noopener">https://github.com/itmifen/mfutility</a>  </p>
-        
-        <p class="article-more-link">
-            <a href="/studyreflect/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
             <a href="/redisuse/">Redis常见的应用场景解析</a>
         </h1>
         
@@ -432,49 +393,6 @@
         
         <p class="article-more-link">
             <a href="/redisuse/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/weuireact/">weui-react项目实战新心得</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/weuireact/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/前端/">前端</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <h2 id="weui-react简介"><a href="#weui-react简介" class="headerlink" title="weui-react简介"></a>weui-react简介</h2><p>weui是微信官方制作的一个基础样式UI库，打造与原生微信同样的视觉和交互体验，整个UI库包括网页版和小程序版，网页版包括传统的javascript版和react版本。<br>个人对react的偏爱超过传统js版本，就用了react版本做为自己的核心框架。<br>weui-react 官网：<a href="https://weui.github.io/react-weui/docs/#/react-weui/docs/page/0/articles/0" target="_blank" rel="noopener">点击这里</a>  </p>
-<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>计划做一个基于图书交换平台，大家可以通过平台发布自己的闲置书籍，如有人愿意通过自己的闲置书籍进行交换，即可达成交易。<br>作为一个后端的开发人员，想做一些可以上线运营的项目，没有好的前端配合是很难完成的。现在越来越多的开源UI可以使用，基本上能够上手即用。<br>为了便于开发，把精力更多的放在业务和后端，对前端的技术栈进行了选择，基于微信的项目，我选择这样的核心框架：<br><strong>基础框架：react</strong><br><strong>UI框架：weui-react</strong><br><strong>构建工具: webpack</strong><br><strong>路由工具: react-router</strong></p>
-        
-        <p class="article-more-link">
-            <a href="/weuireact/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>
@@ -535,21 +453,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/ideaplugin/">IntelliJ IDEA插件——冷门神器分享</a>
+            <a href="/reactcnblogs/">基于react native打造属于自己的博客app</a>
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="/ideaplugin/">
+            <a class="article-date" href="/reactcnblogs/">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2018-06-02T22:00:00.000Z" itemprop="datePublished">2018-06-03</time>
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/java/">java</a>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>
 </div>
 
 
@@ -559,12 +477,101 @@
     <section class="article-body markdown-body">
         
         <blockquote>
-<p>IntelliJ  IDEA就不必介绍了，至今还能保持IDE前三的神器，如今java程序员的首选，今天介绍几款冷门但绝对是神器的IDEA插件。 </p>
+<p>关注react native这个技术很久了，去年就做了一个简单的Demo,最近有时间，重新了解了一下react native的现状，发现已经有很大的进步，现在完善了一下原有的项目，并重新开源共享一下。  </p>
 </blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>IDEA自不必说，IDEA插件是开发中必备的神器，相信大家对常见的插件都如数家珍，如：findbug、checkstyle、JRebel、key promoter以及刚出的新贵阿里代码规范，这些都给开发人员带来极大的效率提升，今天我给大家介绍的几个，可能在很多插件推荐的文章里都没有提到，但是绝对是值得尝试的几款插件。  </p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>对react native这个技术关注很久了，去年也花了很长时间学习，但中途因为时间问题没有进行更深入的学习。当时，react native还存在很多坑，使用起来不太方便。一年过去，现在重新开始关注react native，发现react native已经将原有的很多问题解决，相比当年版本，有太多的进步。现在将原有项目重构并重新发布到github。</p>
         
         <p class="article-more-link">
-            <a href="/ideaplugin/#more">
+            <a href="/reactcnblogs/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/weuireact/">weui-react项目实战新心得</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/weuireact/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/前端/">前端</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="weui-react简介"><a href="#weui-react简介" class="headerlink" title="weui-react简介"></a>weui-react简介</h2><p>weui是微信官方制作的一个基础样式UI库，打造与原生微信同样的视觉和交互体验，整个UI库包括网页版和小程序版，网页版包括传统的javascript版和react版本。<br>个人对react的偏爱超过传统js版本，就用了react版本做为自己的核心框架。<br>weui-react 官网：<a href="https://weui.github.io/react-weui/docs/#/react-weui/docs/page/0/articles/0" target="_blank" rel="noopener">点击这里</a>  </p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>计划做一个基于图书交换平台，大家可以通过平台发布自己的闲置书籍，如有人愿意通过自己的闲置书籍进行交换，即可达成交易。<br>作为一个后端的开发人员，想做一些可以上线运营的项目，没有好的前端配合是很难完成的。现在越来越多的开源UI可以使用，基本上能够上手即用。<br>为了便于开发，把精力更多的放在业务和后端，对前端的技术栈进行了选择，基于微信的项目，我选择这样的核心框架：<br><strong>基础框架：react</strong><br><strong>UI框架：weui-react</strong><br><strong>构建工具: webpack</strong><br><strong>路由工具: react-router</strong></p>
+        
+        <p class="article-more-link">
+            <a href="/weuireact/#more">
+                <span class="vm">阅读全文</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            <a href="/studyreflect/">你必须了解的反射——反射来实现实体验证</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/studyreflect/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-06-26T22:00:00.000Z" itemprop="datePublished">2018-06-27</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>开发工作中，都会需要针对传入的参数进行验证，特别是针对实体进行验证，确保传入的参数格式正确。这里做了一个非常简单的组件进行验证。抛砖引玉，让大家深入思考下反射的应用。    </p>
+</blockquote>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>日常开发，都是通过API进行前后端的系统对接，对API参数的验证是一个使用率非常高的功能，如果能非常简便的的进行参数验证，能降低代码量，提升工作效率。 </p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>项目地址：<a href="https://github.com/itmifen/mfutility" target="_blank" rel="noopener">https://github.com/itmifen/mfutility</a>  </p>
+        
+        <p class="article-more-link">
+            <a href="/studyreflect/#more">
                 <span class="vm">阅读全文</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>谈谈系统密码存储策略 | IT米粉</title>
+    <meta name="author" content="[object Object]" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
+    <meta name="description" content="
+最近IT界很火的一则新闻是华住的数据库泄露问题，身边很多人在讨论数据库安全的问题，大家经常说提升密码复杂度、加密等，但是很多人并不知道在开发的时候，用户的密码怎么处理，或者说，处理的并不恰当，这篇文章主要介绍在系统设计的过程中，我们的密码究竟应该怎么处理才最大限度的保证安全。  
+
+密码加密的重要性？还是从脱库说起，数据库被人拉走了，最可怕的是什么？个人手机、身份证、地址？？这些是很重要，但是，其实个人隐私数据，获取的难度不是很大，而且不容易直接对一个人造成巨大的伤害，但是，密码被人知道了，" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <!-- <meta name="baidu-site-verification" content="F0CXvmUgA9" /> -->
+
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">标签</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT技术/">IT技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构/">架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+    </div>
+  </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <!-- <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://www.17ij.com"></form> -->
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#密码加密的重要性？"><span class="toc-number">1.</span> <span class="toc-text">密码加密的重要性？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码管理的入门要求"><span class="toc-number">2.</span> <span class="toc-text">密码管理的入门要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码-salt"><span class="toc-number">3.</span> <span class="toc-text">密码+salt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端和传输加密"><span class="toc-number">4.</span> <span class="toc-text">客户端和传输加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            谈谈系统密码存储策略
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/password/">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-09-13T13:35:49.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/架构/">架构</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <blockquote>
+<p>最近IT界很火的一则新闻是华住的数据库泄露问题，身边很多人在讨论数据库安全的问题，大家经常说提升密码复杂度、加密等，但是很多人并不知道在开发的时候，用户的密码怎么处理，或者说，处理的并不恰当，这篇文章主要介绍在系统设计的过程中，我们的密码究竟应该怎么处理才最大限度的保证安全。  </p>
+</blockquote>
+<h2 id="密码加密的重要性？"><a href="#密码加密的重要性？" class="headerlink" title="密码加密的重要性？"></a>密码加密的重要性？</h2><p>还是从脱库说起，数据库被人拉走了，最可怕的是什么？个人手机、身份证、地址？？这些是很重要，但是，其实个人隐私数据，获取的难度不是很大，而且不容易直接对一个人造成巨大的伤害，但是，密码被人知道了，就是很可怕的事情。因为，大部分人不同的系统都是共用密码。这个错误比较低级，但是很常见，所以，密码，是被脱库后最容易被人利用。所以，密码是必须加密的，不把用户密码加密的系统和公司，都该判刑。  </p>
+<h2 id="密码管理的入门要求"><a href="#密码管理的入门要求" class="headerlink" title="密码管理的入门要求"></a>密码管理的入门要求</h2><p>密码管理产品级别的需求，大家都能看到的是，提升密码的复杂度和管理策略，一般包括：</p>
+<ul>
+<li>密码加密保存，并且是不可逆的。</li>
+<li>密码更长更复杂。如：密码长度大于8位，必须是大小写字母和数字的组合。  </li>
+<li>定期修改密码策略。   </li>
+<li>登录输入密码错误多次，需要输入验证码，甚至是锁定账户。<br>以上都是一些基础，但是非常有效的方案，这些产品设计不是我们讨论的重点，我们重点说说具体的实现。<br>在技术上，实际密码我们是怎么存储的呢？</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String password=MD5(<span class="string">"明文"</span>)</span><br></pre></td></tr></table></figure>
+<p>对用户的输入进行MD5加密后，就直接保存在数据库，可能15年前这还是比较安全的存储方式，但是现在，MD5已经不再安全，越是简单的密码，被撞库获取到原文的可能性非常的高，所以直接使用MD5加密后保存密码，显然已经是非常不安全的方式了。  </p>
+<h2 id="密码-salt"><a href="#密码-salt" class="headerlink" title="密码+salt"></a>密码+salt</h2><p>前文说道，密码太短，显然已经不安全了，那么为了提升负责度，就会强制把用户的密码变得更加复杂，于是，就产生了密码加salt的方案。salt肯定是需要一个比较的复杂的字符串，长度可以长一点。而且最好是，每个用户的salt是不一样的。以前的数据库结构是：  </p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>用户名</th>
+<th>密码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>user1</td>
+<td>34234sdfse2342dggs234s</td>
+</tr>
+<tr>
+<td>2</td>
+<td>user2</td>
+<td>d34desf3432sdf23423sdf</td>
+</tr>
+</tbody>
+</table>
+<p>那么比较安全的方式应该是：  </p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>用户名</th>
+<th>密码</th>
+<th>salt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>user1</td>
+<td>sdf452342sdfsd23234sdf</td>
+<td>982934&amp;<em>7934708hHG12&amp;%&amp;</em>()()()IUHUHGggifiknsdf</td>
+</tr>
+<tr>
+<td>2</td>
+<td>user2</td>
+<td>234df3234sdf234asfddsd</td>
+<td>&amp;<em>&amp;8uhhhkKHKl9</em>(7KBKH&amp;……)adksjknklasdlfkjkkkkk  </td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String password=SHA1(<span class="string">"明文"</span>+salt);</span><br></pre></td></tr></table></figure>
+<p>这里，我们用了相对而言撞库难度比较大的SHA1的加密方式来取代MD5加密，这样基本就是一个比较安全的密码了，即使数据被脱库了，撞库也很基本不可能破解出明文。  </p>
+<p>但是，这样就真的安全了吗？不一定，我们还少了传输加密以及客户端加密。  </p>
+<h2 id="客户端和传输加密"><a href="#客户端和传输加密" class="headerlink" title="客户端和传输加密"></a>客户端和传输加密</h2><p>首先我们说说传输加密，其实，这个现在已经有很标准的解决方案——https，这里我们就不多说了。<br>我们主要所属说说客户端加密：<br>可能大家觉得有了传输加密了，实际客户端加密也不太重要，显然不是，这里有个很重要的场景就容易出现风险：  </p>
+<ul>
+<li>日志。大家的系统都会统一记录日志，针对密码这类敏感的信息，如果记录了日志，而且大家记录的都是用户输入的明文，这样非常危险。  </li>
+<li>内网劫持。如果数据还没有到公网，在内网就被劫持了，有可能暴露明文的密码。  </li>
+</ul>
+<p>所以，客户端加密也是很有必要的。现在的前端技术都是支持MD5加密，所以我们就在前端对用户的数据进行了MD5加密。<br>客户端代码：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> password=md5(<span class="string">"明文"</span>);</span><br></pre></td></tr></table></figure>
+<pre><code class="java">String password=SHA1(<span class="string">"客户端MD5加密后的支付"</span>+salt);
+</code></pre>
+<p>实际，这样最终存在数据库的，就是一个做了双重加密的支付。网络传输和日志记录的就是单次加密的字符，整体的安全度就非常高了。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这样，一个好的密码体系应该就是这样了：  </p>
+<ul>
+<li>客户端MD5针对用户输入的明文加密后提交到服务端。</li>
+<li>服务端根据用户生成一个复杂的随机salt。</li>
+<li>根据随机salt和接收到的密码，sha1加密，生成密码保存到数据库。</li>
+</ul>
+<p>这是一篇非常基础的文章，但是却被很多的开发和产品忽略，风险总在一念之间。安全永远是一个相对的概念，我们只能提升破解安全的成本，无法做到绝对的安全。    </p>
+<hr>
+<p>欢迎大家关注我的公众号交流、学习、第一时间获取最新的文章。<br>微信号：itmifen  </p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fjqwqm6v25j30760760t7.jpg" alt=""></p>
+
+        
+    </section>
+</article>
+
+
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+</footer>
+
+
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
+
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
+
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
+
+</body>
+</html>
