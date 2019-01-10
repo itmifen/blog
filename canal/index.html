@@ -7,11 +7,14 @@
 
     
 
-    <title>Tag: 架构 | IT米粉</title>
+    <title>开源数据同步神器——canal | IT米粉</title>
     <meta name="author" content="[object Object]" />
     <meta name="version" content="1.0.0" />
     <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
-    <meta name="description" content="公众号：itmifen，IT狗，程序猿，苦B奋斗的伪文中老年" />
+    <meta name="description" content="前言如今大型的IT系统中，都会使用分布式的方式，同时会有非常多的中间件，如redis、消息队列、大数据存储等，但是实际核心的数据存储依然是存储在数据库，作为使用最广泛的数据库，如何将mysql的数据与中间件的数据进行同步，既能确保数据的一致性、及时性，也能做到代码无侵入的方式呢？如果有这样的一个需求，数据修改后，需要及时的将mysql中的数据更新到elasticsearch,我们会怎么进行实现呢？
+数据同步方案选择针对上文的需求，经过思考，初步有如下的一些方案：  
+
+代码实现针对代码中进行数据" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
     <!-- <meta name="baidu-site-verification" content="F0CXvmUgA9" /> -->
@@ -84,95 +87,23 @@
 
         
         
+        
+        
 
         
-        <div class="author-meta">
-            
-            <div class="author-avatar">
-                <a href="/">
-                    <img src="http://www.17ij.com/img/logo.jpg" title="itmifen">
-                </a>
-            </div>
-            
-            <div class="author-name">公众号：itmifen</div>
-            <div class="author-work">IT狗，程序猿，苦B奋斗的伪文中老年</div>
-            <div class="author-location">
-                <i class="icon-location vm"></i>
-                <span class="vm">深圳, shenzhen</span>
-            </div>
-            
-            <div class="author-thread-wrap">
-                <div class="author-threads clearfix">
-                    
-                    <a class="thread-item" href="https://github.com/itmifen" target="_blank" rel="noopener"><i class="icon-github"></i></a>
-                    
-                    
-                    
-                </div>
-            </div>
-            
-            <br/>
-            <div><img src="https://ws1.sinaimg.cn/large/0069RVTdgy1fut2brppckj30zk0zkq4j.jpg" width="150" /></div>
-
-        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据同步方案选择"><span class="toc-number">2.</span> <span class="toc-text">数据同步方案选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canal"><span class="toc-number">3.</span> <span class="toc-text">canal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-number">3.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">3.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#canal-Adapter"><span class="toc-number">3.3.</span> <span class="toc-text">canal Adapter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见问题"><span class="toc-number">3.4.</span> <span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canal-Adapter-elasticsearch-改造"><span class="toc-number">4.</span> <span class="toc-text">canal Adapter elasticsearch 改造</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#elasticsearch初始化"><span class="toc-number">4.1.</span> <span class="toc-text">elasticsearch初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#esconfig-bug处理"><span class="toc-number">4.2.</span> <span class="toc-text">esconfig bug处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后续计划"><span class="toc-number">4.3.</span> <span class="toc-text">后续计划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码"><span class="toc-number">4.4.</span> <span class="toc-text">源码</span></a></li></ol></li></ol>
         
     </div>
 </aside>
 
 </header>
 
-        <div id="content" class="content">
-    <article class="article" itemscope itemprop="blogPost">
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
     
     <header class="article-header">
         
         <h1 itemprop="name">
-            <a href="/postmanuse/">你应该学会的接口调试神器——Postman高级用法！</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/postmanuse/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-05-26T22:00:00.000Z" itemprop="datePublished">2018-05-27</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/架构/">架构</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>postman这个神器相信大家都用过，程序员作为非专业的测试人员，非常需要这么一款简单轻量级的restful测试工具，但是不知道你是否知道，postman的强大之处不只是测试一下接口，还有其他非常赞的使用方式。</p>
-</blockquote>
-<h2 id="批量执行接口"><a href="#批量执行接口" class="headerlink" title="批量执行接口"></a>批量执行接口</h2><p>入门级功能，但是被很多人忽略。postman左侧有个collections的tab,可以将接口进行分组，而且可以将分组以后的接口进行批量的执行，是一个非常赞的功能。当然，点击Runner也是可以的。</p>
-        
-        <p class="article-more-link">
-            <a href="/postmanuse/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/canal/">开源数据同步神器——canal</a>
+            开源数据同步神器——canal
         </h1>
         
         <div class="article-meta clearfix">
@@ -262,56 +193,6 @@
 </article>
 
 
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/logsystem/">系统日志管理那点事</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="/logsystem/">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2018-01-01T22:00:00.000Z" itemprop="datePublished">2018-01-02</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/java/">java</a>, <a class="article-tag-link" href="/tags/架构/">架构</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <blockquote>
-<p>说起日志，大家都是耳熟能详的，一大堆日志插件映入眼帘，日志收集的方式也历历在目，但是，今天我们的重点不仅仅是收集日志了，今天我们主要说说怎么管理日志  </p>
-</blockquote>
-        
-        <p class="article-more-link">
-            <a href="/logsystem/#more">
-                <span class="vm">阅读全文</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-
-
-<nav class="page-nav">
-    <a class="extend prev" rel="prev" href="/tags/架构/">&laquo; 上一页</a><a class="page-number" href="/tags/架构/">1</a><span class="page-number current">2</span>
-</nav>
-
 
 </div>
         <footer class="footer">
@@ -322,6 +203,8 @@
     </div>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
     
     <script type="text/javascript">
         $(function() {
@@ -343,6 +226,8 @@
                 nodes.navTags.removeClass('tag-show');
             });*/
 
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
             
         });
     </script>
