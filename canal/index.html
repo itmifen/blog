@@ -12,9 +12,10 @@
     <meta name="version" content="1.0.0" />
     <meta name="keywords" content="IT米粉,架构,spring cloud,程序员,数据库" />
     <meta name="description" content="前言如今大型的IT系统中，都会使用分布式的方式，同时会有非常多的中间件，如redis、消息队列、大数据存储等，但是实际核心的数据存储依然是存储在数据库，作为使用最广泛的数据库，如何将mysql的数据与中间件的数据进行同步，既能确保数据的一致性、及时性，也能做到代码无侵入的方式呢？如果有这样的一个需求，数据修改后，需要及时的将mysql中的数据更新到elasticsearch,我们会怎么进行实现呢？
+
 数据同步方案选择针对上文的需求，经过思考，初步有如下的一些方案：  
 
-代码实现针对代码中进行数据" />
+代码实现针对代码中进行数" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
     <!-- <meta name="baidu-site-verification" content="F0CXvmUgA9" /> -->
@@ -111,7 +112,7 @@
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2018-01-10T00:00:00.000Z" itemprop="datePublished">2018-01-10</time>
+    <time datetime="2019-01-10T00:00:00.000Z" itemprop="datePublished">2019-01-10</time>
 </a>
 
             
@@ -127,6 +128,7 @@
     <section class="article-body markdown-body">
         
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如今大型的IT系统中，都会使用分布式的方式，同时会有非常多的中间件，如redis、消息队列、大数据存储等，但是实际核心的数据存储依然是存储在数据库，作为使用最广泛的数据库，如何将mysql的数据与中间件的数据进行同步，既能确保数据的一致性、及时性，也能做到代码无侵入的方式呢？如果有这样的一个需求，数据修改后，需要及时的将mysql中的数据更新到elasticsearch,我们会怎么进行实现呢？</p>
+<a id="more"></a>
 <h2 id="数据同步方案选择"><a href="#数据同步方案选择" class="headerlink" title="数据同步方案选择"></a>数据同步方案选择</h2><p>针对上文的需求，经过思考，初步有如下的一些方案：  </p>
 <ul>
 <li>代码实现<br>针对代码中进行数据库的增删改操作时，同时进行elasticsearch的增删改操作。</li>
